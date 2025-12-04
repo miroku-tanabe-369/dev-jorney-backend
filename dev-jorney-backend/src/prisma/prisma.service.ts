@@ -6,13 +6,10 @@ import { PrismaClient } from '@prisma/client';
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
   constructor() {
-    super({
-      datasources: {
-        db: {
-          url: process.env.DATABASE_URL,
-        },
-      },
-    });
+    // Prisma 7では、DATABASE_URL環境変数が自動的に読み込まれるため、
+    // datasourcesを明示的に指定する必要はない
+    // 環境変数DATABASE_URLが設定されていれば、Prisma Clientは自動的にそれを使用する
+    super();
   }
 
   async onModuleInit() {

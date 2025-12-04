@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # PostgreSQLデータベース
   postgres:
@@ -30,7 +28,8 @@ services:
       dockerfile: Dockerfile  # 使用するDockerfile（デフォルトはDockerfileなので省略可能）
       target: builder  # マルチステージビルドで使用するステージ（builderステージまでビルド）
     container_name: dev-jorney-backend
-    command: npm run start:dev  # 開発モードで起動（ホットリロード有効）
+    # コンテナ起動時にPrisma Clientを生成してから開発サーバーを起動
+    command: sh -c "npx prisma generate && npm run start:dev"
     ports:
       - "3000:3000"
     env_file:
@@ -46,7 +45,7 @@ services:
     volumes:
       - .:/app  # ソースコードをマウント（ホットリロード用）
       - /app/node_modules  # 匿名volumenode_modulesはコンテナ内のものを使用（ビルド済み）
-      - /app/dist  # 匿名volume distもコンテナ内のものを使用
+      # /app/dist の匿名ボリュームマウントを削除（NestJSのwatchモードでdistを削除できるようにする）
     depends_on:
       postgres:
         condition: service_healthy

@@ -8,6 +8,10 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
+# PrismaスキーマファイルをコピーしてPrisma Clientを生成
+COPY prisma ./prisma
+RUN npx prisma generate
+
 # アプリケーションのソースコードをコピーしてビルド
 # 一つ目の引数はローカルを指している。
 COPY . . 
