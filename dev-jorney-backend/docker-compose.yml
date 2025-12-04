@@ -28,8 +28,8 @@ services:
       dockerfile: Dockerfile  # 使用するDockerfile（デフォルトはDockerfileなので省略可能）
       target: builder  # マルチステージビルドで使用するステージ（builderステージまでビルド）
     container_name: dev-jorney-backend
-    # コンテナ起動時にPrisma Clientを生成してから開発サーバーを起動
-    command: sh -c "npx prisma generate && npm run start:dev"
+    # コンテナ起動時にPrisma Clientを生成、マイグレーションを適用してから開発サーバーを起動
+    command: sh -c "npx prisma generate && npx prisma migrate deploy && npm run start:dev"
     ports:
       - "3000:3000"
     env_file:
