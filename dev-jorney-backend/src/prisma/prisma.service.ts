@@ -16,10 +16,15 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
       throw new Error('DATABASE_URL environment variable is not set');
     }
     
-    this.pool = new Pool({ connectionString });
-    const adapter = new PrismaPg(this.pool);
+    // super()を呼ぶ前に、必要な変数を準備する
+    const pool = new Pool({ connectionString });
+    const adapter = new PrismaPg(pool);
     
+    // super()を先に呼ぶ必要がある
     super({ adapter });
+    
+    // super()を呼んだ後に、this.poolに代入する
+    this.pool = pool;
   }
 
   async onModuleInit() {
