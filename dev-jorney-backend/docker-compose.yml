@@ -24,11 +24,11 @@ services:
   # バックエンドアプリケーション（開発用）
   backend:
     build:
-      context: .  # ビルドコンテキスト（Dockerfileがあるディレクトリ）
-      dockerfile: Dockerfile  # 使用するDockerfile（デフォルトはDockerfileなので省略可能）
-      target: builder  # マルチステージビルドで使用するステージ（builderステージまでビルド）
+      context: .
+      dockerfile: Dockerfile
+      # target: builder # ← 開発時には削除し、ビルドは全ステージで行う
     container_name: dev-jorney-backend
-    # コンテナ起動時にPrisma Clientを生成、マイグレーションを適用してから開発サーバーを起動
+    # ★★★ 修正箇所: ボリュームマウント後に再生成/デプロイ/起動を行う ★★★
     command: sh -c "npx prisma generate && npx prisma migrate deploy && npm run start:dev"
     ports:
       - "3000:3000"
@@ -44,8 +44,7 @@ services:
       DATABASE_URL: ${DATABASE_URL}
     volumes:
       - .:/app  # ソースコードをマウント（ホットリロード用）
-      - /app/node_modules  # 匿名volumenode_modulesはコンテナ内のものを使用（ビルド済み）
-      # /app/dist の匿名ボリュームマウントを削除（NestJSのwatchモードでdistを削除できるようにする）
+      - /app/node_modules  # node_modulesはコンテナ内のものを使用
     depends_on:
       postgres:
         condition: service_healthy
@@ -59,4 +58,3 @@ volumes:
 networks:
   dev-jorney-network:
     driver: bridge
-

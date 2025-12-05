@@ -7,6 +7,7 @@ dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
+  // Dockerコンテナ内で動作するため、0.0.0.0にバインドして外部からのアクセスを許可
+  await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
 }
 bootstrap();

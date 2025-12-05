@@ -2,14 +2,24 @@
 
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
+import { Pool } from 'pg';
+import { PrismaPg } from '@prisma/adapter-pg';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
+  private pool: Pool;
+
   constructor() {
-    // Prisma 7では、DATABASE_URL環境変数が自動的に読み込まれるため、
-    // datasourcesを明示的に指定する必要はない
-    // 環境変数DATABASE_URLが設定されていれば、Prisma Clientは自動的にそれを使用する
-    super();
+    // Prisma 7では、adapterを使用してPrismaClientを初期化する必要がある
+    const connectionString = process.env.DATABASE_URL;
+    if (!connectionString) {
+      throw new Error('DATABASE_URL environment variable is not set');
+    }
+    
+    this.pool = new Pool({ connectionString });
+    const adapter = new PrismaPg(this.pool);
+    
+    super({ adapter });
   }
 
   async onModuleInit() {
@@ -22,6 +32,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
     // アプリケーション終了時に接続を切断してメモリリークを防止
     try {
       await this.$disconnect();
+      await this.pool.end();
     } catch (error) {
       // エラーを無視（既に切断されている場合など）
     }
