@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/users.module';
-import { ProfileModule } from './profile/profile.module';
 import { SkillsModule } from './skills/skills.module';
 import { SkilltreesModule } from './skilltrees/skilltrees.module';
 import { NodesModule } from './nodes/nodes.module';
@@ -14,7 +13,6 @@ import { ChecklistsModule } from './checklists/checklists.module';
   imports: [
     PrismaModule,
     UsersModule,
-    ProfileModule,
     SkillsModule,
     SkilltreesModule,
     NodesModule,
