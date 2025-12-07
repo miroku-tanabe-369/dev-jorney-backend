@@ -15,43 +15,42 @@ datasource db {
 
 // ユーザーマスタ
 model UsersMst {
-  userId          String   @id @default(uuid()) @db.Uuid
-  name            String   @db.VarChar(255)
-  email           String   @unique @db.VarChar(255)
-  profile         String?  @db.VarChar(500)
+  userId              String    @id @default(uuid()) @db.Uuid
+  name                String    @db.VarChar(255)
+  email               String    @unique @db.VarChar(255)
+  profile             String?   @db.VarChar(500)
   //TODO: Base64形式に修正
-  icon            String?  @map("icon") @db.VarChar(255)
-  currentLevel    Int      @map("current_level")
-  totalExp        Int      @map("total_exp")
-  totalSkillPoint Int      @map("total_skill_point")
-  completedQuestCount Int  @map("completed_quest_count")
-  createdBy       String   @map("created_by") @db.Char(36)
-  createdAt       DateTime @map("created_at") @default(now())
-  updatedBy       String   @map("updated_by") @db.Char(36)
-  updatedAt       DateTime @map("updated_at") @updatedAt
+  icon                String?   @map("icon") @db.VarChar(255)
+  currentLevel        Int       @map("current_level")
+  totalExp            Int       @map("total_exp")
+  totalSkillPoint     Int       @map("total_skill_point")
+  completedQuestCount Int       @map("completed_quest_count")
+  createdBy           String    @map("created_by") @db.Char(36)
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedBy           String    @map("updated_by") @db.Char(36)
+  updatedAt           DateTime  @updatedAt @map("updated_at")
   //ソフトデリート用フィールド　CognitoのUserPoolとの泣き別れを防ぐ
-  deletedAt       DateTime? @map("deleted_at") @db.Timestamp
-  deletedBy       String?   @map("deleted_by") @db.Char(36)
+  deletedAt           DateTime? @map("deleted_at") @db.Timestamp
+  deletedBy           String?   @map("deleted_by") @db.Char(36)
 
   // リレーション
-  userSkills            UsersSkillsTran[]
-  questProgresses       QuestProgressTran[]
-  nodeProgresses        NodeProgressTran[]
-  skilltreeProgresses   SkilltreeProgressTran[]
-  managedChecklists     ManagedChecklistTran[]
+  userSkills          UsersSkillsTran[]
+  questProgresses     QuestProgressTran[]
+  nodeProgresses      NodeProgressTran[]
+  skilltreeProgresses SkilltreeProgressTran[]
 
-  @@map("users_mst")
   @@index([deletedAt])
+  @@map("users_mst")
 }
 
 // スキルマスタ
 model SkillsMst {
-  skillCode  String @id @map("skill_code") @db.VarChar(255)
-  skillName  String @map("skill_name") @db.VarChar(255)
-  createdBy  String @map("created_by") @db.Char(36)
-  createdAt  DateTime @map("created_at") @default(now())
-  updatedBy  String @map("updated_by") @db.Char(36)
-  updatedAt  DateTime @map("updated_at") @updatedAt
+  skillCode String   @id @map("skill_code") @db.VarChar(255)
+  skillName String   @map("skill_name") @db.VarChar(255)
+  createdBy String   @map("created_by") @db.Char(36)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedBy String   @map("updated_by") @db.Char(36)
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // リレーション
   userSkills UsersSkillsTran[]
@@ -61,12 +60,12 @@ model SkillsMst {
 
 // スキルツリーマスタ
 model SkilltreesMst {
-  skilltreeCode String @id @map("skilltree_code") @db.VarChar(255)
-  skilltreeName String @map("skilltree_name") @db.VarChar
-  createdBy     String @map("created_by") @db.Char(36)
-  createdAt     DateTime @map("created_at") @default(now())
-  updatedBy     String @map("updated_by") @db.Char(36)
-  updatedAt     DateTime @map("updated_at") @updatedAt
+  skilltreeCode String   @id @map("skilltree_code") @db.VarChar(255)
+  skilltreeName String   @map("skilltree_name") @db.VarChar
+  createdBy     String   @map("created_by") @db.Char(36)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedBy     String   @map("updated_by") @db.Char(36)
+  updatedAt     DateTime @updatedAt @map("updated_at")
 
   // リレーション
   skilltreeNodes      SkilltreesNodeTran[]
@@ -77,117 +76,110 @@ model SkilltreesMst {
 
 // ノードマスタ
 model NodesMst {
-  nodeCode String @id @map("node_code") @db.VarChar(255)
-  nodeName String @map("node_name") @db.VarChar(255)
-  createdBy String @map("created_by") @db.Char(36)
-  createdAt DateTime @map("created_at") @default(now())
-  updatedBy String @map("updated_by") @db.Char(36)
-  updatedAt DateTime @map("updated_at") @updatedAt
+  nodeCode  String   @id @map("node_code") @db.VarChar(255)
+  nodeName  String   @map("node_name") @db.VarChar(255)
+  createdBy String   @map("created_by") @db.Char(36)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedBy String   @map("updated_by") @db.Char(36)
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // リレーション
-  skilltreeNodes         SkilltreesNodeTran[]
-  prerequisiteNodes      NodeDependenciesTran[] @relation("PrerequisiteNode")
-  dependentNodes         NodeDependenciesTran[] @relation("DependentNode")
-  quests                QuestMst[]
-  nodeProgresses       NodeProgressTran[]
+  skilltreeNodes    SkilltreesNodeTran[]
+  prerequisiteNodes NodeDependenciesTran[] @relation("PrerequisiteNode")
+  dependentNodes    NodeDependenciesTran[] @relation("DependentNode")
+  quests            QuestMst[]
+  nodeProgresses    NodeProgressTran[]
 
   @@map("nodes_mst")
 }
 
 // クエストマスタ
 model QuestMst {
-  questCode            String @id @map("quest_code") @db.VarChar(255)
-  nodeCode             String @map("node_code") @db.VarChar(255)
-  questOrder           Int @map("quest_order")
-  questName            String @map("quest_name") @db.VarChar
-  questDetail          String @map("quest_detail") @db.VarChar(500)
-  exp                  Int
-  skillPoint           Int @map("skill_point")
-  difficulty           String @db.VarChar(255)
-  recommendedTime      String @map("recommended_time") @db.VarChar(255)
-  learningObjectives   Json @map("learning_objectives")
-  achievementConditions Json @map("achievement_conditions")
-  checklistItems       Json @map("checklist_items")
-  createdBy            String @map("created_by") @db.Char(36)
-  createdAt            DateTime @map("created_at") @default(now())
-  updatedBy            String @map("updated_by") @db.Char(36)
-  updatedAt            DateTime @map("updated_at") @updatedAt
+  questCode             String   @id @map("quest_code") @db.VarChar(255)
+  nodeCode              String   @map("node_code") @db.VarChar(255)
+  questOrder            Int      @map("quest_order")
+  questName             String   @map("quest_name") @db.VarChar
+  questDetail           String   @map("quest_detail") @db.VarChar(500)
+  exp                   Int
+  skillPoint            Int      @map("skill_point")
+  difficulty            String   @db.VarChar(255)
+  recommendedTime       String   @map("recommended_time") @db.VarChar(255)
+  learningObjectives    Json     @map("learning_objectives")
+  achievementConditions Json     @map("achievement_conditions")
+  checklistItems        Json     @map("checklist_items")
+  createdBy             String   @map("created_by") @db.Char(36)
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedBy             String   @map("updated_by") @db.Char(36)
+  updatedAt             DateTime @updatedAt @map("updated_at")
 
   // リレーション
-  node                 NodesMst @relation(fields: [nodeCode], references: [nodeCode], onDelete: Cascade)
-  questProgresses      QuestProgressTran[]
-  /*
-  checklists           ChecklistMst[]
-  learningObjectivesMst LearningObjectivesMst[]
-  archivesConditions   ArchivesConditionsMst[]
-  */
-  managedChecklists    ManagedChecklistTran[]
+  node            NodesMst            @relation(fields: [nodeCode], references: [nodeCode], onDelete: Cascade)
+  questProgresses QuestProgressTran[]
+  /**
+   * checklists           ChecklistMst[]
+   * learningObjectivesMst LearningObjectivesMst[]
+   * archivesConditions   ArchivesConditionsMst[]
+   */
 
   @@map("quest_mst")
 }
 
 // チェックリストマスタ
-/*
-model ChecklistMst {
-  checklistCode  String @id @map("checklist_code") @db.VarChar(255)
-  questCode      String @map("quest_code") @db.VarChar(255)
-  checklistDetail String @map("checklist_detail") @db.VarChar(500)
-  createdBy      String @map("created_by") @db.Char(36)
-  createdAt      DateTime @map("created_at") @default(now())
-  updatedBy      String @map("updated_by") @db.Char(36)
-  updatedAt      DateTime @map("updated_at") @updatedAt
-
-  // リレーション
-  quest QuestMst @relation(fields: [questCode], references: [questCode], onDelete: Cascade)
-
-  @@map("checklist_mst")
-}
-*/
+/**
+ * model ChecklistMst {
+ * checklistCode  String @id @map("checklist_code") @db.VarChar(255)
+ * questCode      String @map("quest_code") @db.VarChar(255)
+ * checklistDetail String @map("checklist_detail") @db.VarChar(500)
+ * createdBy      String @map("created_by") @db.Char(36)
+ * createdAt      DateTime @map("created_at") @default(now())
+ * updatedBy      String @map("updated_by") @db.Char(36)
+ * updatedAt      DateTime @map("updated_at") @updatedAt
+ * // リレーション
+ * quest QuestMst @relation(fields: [questCode], references: [questCode], onDelete: Cascade)
+ * @@map("checklist_mst")
+ * }
+ */
 
 // 学習目標マスタ
-/*
-model LearningObjectivesMst {
-  learningObjectivesCode String @id @map("learning_objectives_code") @db.VarChar(255)
-  questCode               String @map("quest_code") @db.VarChar(255)
-  objectivesDetail        String @map("objectives_detail") @db.VarChar(500)
-  createdBy               String @map("created_by") @db.Char(36)
-  createdAt               DateTime @map("created_at") @default(now())
-  updatedBy               String @map("updated_by") @db.Char(36)
-  updatedAt               DateTime @map("updated_at") @updatedAt
-
-  // リレーション
-  quest QuestMst @relation(fields: [questCode], references: [questCode], onDelete: Cascade)
-
-  @@map("learning_objectives_mst")
-}
-*/
+/**
+ * model LearningObjectivesMst {
+ * learningObjectivesCode String @id @map("learning_objectives_code") @db.VarChar(255)
+ * questCode               String @map("quest_code") @db.VarChar(255)
+ * objectivesDetail        String @map("objectives_detail") @db.VarChar(500)
+ * createdBy               String @map("created_by") @db.Char(36)
+ * createdAt               DateTime @map("created_at") @default(now())
+ * updatedBy               String @map("updated_by") @db.Char(36)
+ * updatedAt               DateTime @map("updated_at") @updatedAt
+ * // リレーション
+ * quest QuestMst @relation(fields: [questCode], references: [questCode], onDelete: Cascade)
+ * @@map("learning_objectives_mst")
+ * }
+ */
 
 // 達成条件マスタ
-/*
-model ArchivesConditionsMst {
-  archivesCode   String @id @map("archives_code") @db.VarChar(255)
-  questCode       String @map("quest_code") @db.VarChar(255)
-  archivesDetail String @map("archives_detail") @db.VarChar(500)
-  createdBy      String @map("created_by") @db.Char(36)
-  createdAt       DateTime @map("created_at") @default(now())
-  updatedBy       String @map("updated_by") @db.Char(36)
-  updatedAt       DateTime @map("updated_at") @updatedAt
-
-  // リレーション
-  quest QuestMst @relation(fields: [questCode], references: [questCode], onDelete: Cascade)
-
-  @@map("archives_conditions_mst")
-}
-*/
+/**
+ * model ArchivesConditionsMst {
+ * archivesCode   String @id @map("archives_code") @db.VarChar(255)
+ * questCode       String @map("quest_code") @db.VarChar(255)
+ * archivesDetail String @map("archives_detail") @db.VarChar(500)
+ * createdBy      String @map("created_by") @db.Char(36)
+ * createdAt       DateTime @map("created_at") @default(now())
+ * updatedBy       String @map("updated_by") @db.Char(36)
+ * updatedAt       DateTime @map("updated_at") @updatedAt
+ * // リレーション
+ * quest QuestMst @relation(fields: [questCode], references: [questCode], onDelete: Cascade)
+ * @@map("archives_conditions_mst")
+ * }
+ */
 
 // レベルマスタ
 model LevelMst {
-  level      Int @id
-  requiredExp Int @map("required_exp")
-  createdBy  String @map("created_by") @db.Char(36)
-  createdAt  DateTime @map("created_at") @default(now())
-  updatedBy  String @map("updated_by") @db.Char(36)
-  updatedAt  DateTime @map("updated_at") @updatedAt
+  level       Int      @id
+  requiredExp Int      @map("required_exp")
+  createdBy   String   @map("created_by") @db.Char(36)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedBy   String   @map("updated_by") @db.Char(36)
+  updatedAt   DateTime @updatedAt @map("updated_at")
 
   @@map("level_mst")
 }
@@ -198,12 +190,12 @@ model LevelMst {
 
 // ユーザー取得スキル（中間テーブル）
 model UsersSkillsTran {
-  userId    String @map("user_id") @db.Uuid
-  skillCode String @map("skill_code") @db.VarChar(255)
-  createdBy String @map("created_by") @db.Char(36)
-  createdAt DateTime @map("created_at") @default(now())
-  updatedBy String @map("updated_by") @db.Char(36)
-  updatedAt DateTime @map("updated_at") @updatedAt
+  userId    String   @map("user_id") @db.Uuid
+  skillCode String   @map("skill_code") @db.VarChar(255)
+  createdBy String   @map("created_by") @db.Char(36)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedBy String   @map("updated_by") @db.Char(36)
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // リレーション
   user  UsersMst  @relation(fields: [userId], references: [userId], onDelete: Cascade)
@@ -215,13 +207,13 @@ model UsersSkillsTran {
 
 // スキルツリーノード（中間テーブル）
 model SkilltreesNodeTran {
-  skilltreeCode String @map("skilltree_code") @db.VarChar(255)
-  nodeCode      String @map("node_code") @db.VarChar(255)
-  nodeOrder     Int    @map("node_order")
-  createdBy     String @map("created_by") @db.Char(36)
-  createdAt     DateTime @map("created_at") @default(now())
-  updatedBy     String @map("updated_by") @db.Char(36)
-  updatedAt     DateTime @map("updated_at") @updatedAt
+  skilltreeCode String   @map("skilltree_code") @db.VarChar(255)
+  nodeCode      String   @map("node_code") @db.VarChar(255)
+  nodeOrder     Int      @map("node_order")
+  createdBy     String   @map("created_by") @db.Char(36)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedBy     String   @map("updated_by") @db.Char(36)
+  updatedAt     DateTime @updatedAt @map("updated_at")
 
   // リレーション
   skilltree SkilltreesMst @relation(fields: [skilltreeCode], references: [skilltreeCode], onDelete: Cascade)
@@ -233,16 +225,16 @@ model SkilltreesNodeTran {
 
 // ノード依存関係
 model NodeDependenciesTran {
-  prerequisiteNodeCode String @map("prerequisite_node_code") @db.VarChar(255)
-  dependentNodeCode   String @map("dependent_node_code") @db.VarChar(255)
-  createdBy           String @map("created_by") @db.Char(36)
-  createdAt           DateTime @map("created_at") @default(now())
-  updatedBy           String @map("updated_by") @db.Char(36)
-  updatedAt           DateTime @map("updated_at") @updatedAt
+  prerequisiteNodeCode String   @map("prerequisite_node_code") @db.VarChar(255)
+  dependentNodeCode    String   @map("dependent_node_code") @db.VarChar(255)
+  createdBy            String   @map("created_by") @db.Char(36)
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedBy            String   @map("updated_by") @db.Char(36)
+  updatedAt            DateTime @updatedAt @map("updated_at")
 
   // リレーション
   prerequisiteNode NodesMst @relation("PrerequisiteNode", fields: [prerequisiteNodeCode], references: [nodeCode], onDelete: Cascade)
-  dependentNode   NodesMst @relation("DependentNode", fields: [dependentNodeCode], references: [nodeCode], onDelete: Cascade)
+  dependentNode    NodesMst @relation("DependentNode", fields: [dependentNodeCode], references: [nodeCode], onDelete: Cascade)
 
   @@id([prerequisiteNodeCode, dependentNodeCode])
   @@map("node_dependencies_tran")
@@ -250,14 +242,14 @@ model NodeDependenciesTran {
 
 // クエスト進捗状況
 model QuestProgressTran {
-  userId      String @map("user_id") @db.Uuid
-  questCode   String @map("quest_code") @db.VarChar(255)
-  progress    Int
-  statusCode  String @map("status_code") @db.VarChar(255)
-  createdBy  String @map("created_by") @db.Char(36)
-  createdAt   DateTime @map("created_at") @default(now())
-  updatedBy  String @map("updated_by") @db.Char(36)
-  updatedAt  DateTime @map("updated_at") @updatedAt
+  userId     String   @map("user_id") @db.Uuid
+  questCode  String   @map("quest_code") @db.VarChar(255)
+  progress   Int
+  statusCode String   @map("status_code") @db.VarChar(255)
+  createdBy  String   @map("created_by") @db.Char(36)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedBy  String   @map("updated_by") @db.Char(36)
+  updatedAt  DateTime @updatedAt @map("updated_at")
 
   // リレーション
   user  UsersMst @relation(fields: [userId], references: [userId], onDelete: Cascade)
@@ -269,14 +261,14 @@ model QuestProgressTran {
 
 // ノード進捗状況
 model NodeProgressTran {
-  userId     String @map("user_id") @db.Uuid
-  nodeCode   String @map("node_code") @db.VarChar(255)
+  userId     String   @map("user_id") @db.Uuid
+  nodeCode   String   @map("node_code") @db.VarChar(255)
   progress   Int
-  statusCode String @map("status_code") @db.VarChar(255)
-  createdBy String @map("created_by") @db.Char(36)
-  createdAt  DateTime @map("created_at") @default(now())
-  updatedBy String @map("updated_by") @db.Char(36)
-  updatedAt DateTime @map("updated_at") @updatedAt
+  statusCode String   @map("status_code") @db.VarChar(255)
+  createdBy  String   @map("created_by") @db.Char(36)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedBy  String   @map("updated_by") @db.Char(36)
+  updatedAt  DateTime @updatedAt @map("updated_at")
 
   // リレーション
   user UsersMst @relation(fields: [userId], references: [userId], onDelete: Cascade)
@@ -288,14 +280,14 @@ model NodeProgressTran {
 
 // スキルツリー進捗状況
 model SkilltreeProgressTran {
-  userId        String @map("user_id") @db.Uuid
-  skilltreeCode String @map("skilltree_code") @db.VarChar(255)
+  userId        String   @map("user_id") @db.Uuid
+  skilltreeCode String   @map("skilltree_code") @db.VarChar(255)
   progress      Int
-  statusCode    String @map("status_code") @db.VarChar(255)
-  createdBy    String @map("created_by") @db.Char(36)
-  createdAt     DateTime @map("created_at") @default(now())
-  updatedBy    String @map("updated_by") @db.Char(36)
-  updatedAt    DateTime @map("updated_at") @updatedAt
+  statusCode    String   @map("status_code") @db.VarChar(255)
+  createdBy     String   @map("created_by") @db.Char(36)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedBy     String   @map("updated_by") @db.Char(36)
+  updatedAt     DateTime @updatedAt @map("updated_at")
 
   // リレーション
   user      UsersMst      @relation(fields: [userId], references: [userId], onDelete: Cascade)
@@ -303,22 +295,4 @@ model SkilltreeProgressTran {
 
   @@id([userId, skilltreeCode])
   @@map("skilltree_progress_tran")
-}
-
-// チェックリスト管理
-model ManagedChecklistTran {
-  userId         String  @map("user_id") @db.Uuid
-  questCode      String  @map("quest_code") @db.VarChar(255)
-  progressDetail Boolean @map("progress_detail")
-  createdBy      String  @map("created_by") @db.Char(36)
-  createdAt      DateTime @map("created_at") @default(now())
-  updatedBy      String  @map("updated_by") @db.Char(36)
-  updatedAt      DateTime @map("updated_at") @updatedAt
-
-  // リレーション
-  user  UsersMst @relation(fields: [userId], references: [userId], onDelete: Cascade)
-  quest QuestMst @relation(fields: [questCode], references: [questCode], onDelete: Cascade)
-
-  @@id([userId, questCode])
-  @@map("managed_checklist_tran")
 }

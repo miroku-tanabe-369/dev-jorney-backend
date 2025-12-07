@@ -1,0 +1,1118 @@
+{
+  "users": [
+    {
+      "userId": "9a3f2d1e-8c7b-4a60-9d5f-3c8b7a4e2d1f",
+      "name": "John Developer",
+      "email": "john.dev@example.com",
+      "profile": "フルスタック開発の学習を始めたばかりです！",
+      "icon": "icon_default_01",
+      "currentLevel": 1,
+      "totalExp": 0,
+      "totalSkillPoint": 0,
+      "completedQuestCount": 0
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "name": "Alice Coder",
+      "email": "alice.code@example.com",
+      "profile": "フロントエンドとバックエンドの橋渡しを学習中。",
+      "icon": "icon_default_02",
+      "currentLevel": 5,
+      "totalExp": 537,
+      "totalSkillPoint": 100,
+      "completedQuestCount": 12
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "name": "Bob Engineer",
+      "email": "bob.eng@example.com",
+      "profile": "ロードマップをほぼ完了し、プロジェクト応用に取り組んでいます。",
+      "icon": "icon_default_03",
+      "currentLevel": 9,
+      "totalExp": 1655,
+      "totalSkillPoint": 350,
+      "completedQuestCount": 30
+    }
+  ],
+  "levels": [
+    {
+      "level": 1,
+      "requiredExp": 0
+    },
+    {
+      "level": 2,
+      "requiredExp": 100
+    },
+    {
+      "level": 3,
+      "requiredExp": 120
+    },
+    {
+      "level": 4,
+      "requiredExp": 144
+    },
+    {
+      "level": 5,
+      "requiredExp": 173
+    },
+    {
+      "level": 6,
+      "requiredExp": 208
+    },
+    {
+      "level": 7,
+      "requiredExp": 250
+    },
+    {
+      "level": 8,
+      "requiredExp": 300
+    },
+    {
+      "level": 9,
+      "requiredExp": 360
+    },
+    {
+      "level": 10,
+      "requiredExp": 432
+    }
+  ],
+  "skills": [
+    {
+      "skillCode": "SKILL_F001",
+      "skillName": "Web開発基礎 (HTML & CSS)"
+    },
+    {
+      "skillCode": "SKILL_F002",
+      "skillName": "JavaScript 基礎"
+    },
+    {
+      "skillCode": "SKILL_V001",
+      "skillName": "バージョン管理 (Git)"
+    },
+    {
+      "skillCode": "SKILL_F003",
+      "skillName": "フロントエンドフレームワーク"
+    },
+    {
+      "skillCode": "SKILL_B001",
+      "skillName": "バックエンド基礎"
+    },
+    {
+      "skillCode": "SKILL_DB01",
+      "skillName": "データベース基礎"
+    },
+    {
+      "skillCode": "SKILL_A001",
+      "skillName": "API 設計と開発"
+    },
+    {
+      "skillCode": "SKILL_D001",
+      "skillName": "Webセキュリティ"
+    },
+    {
+      "skillCode": "SKILL_O001",
+      "skillName": "クラウドとインフラ (DevOps)"
+    },
+    {
+      "skillCode": "SKILL_P001",
+      "skillName": "フルスタック統合"
+    }
+  ],
+  "skilltrees": [
+    {
+      "skilltreeCode": "FSD_001",
+      "skilltreeName": "フルスタック開発ロードマップ"
+    }
+  ],
+  "nodes": [
+    {
+      "nodeCode": "ND_F001",
+      "nodeName": "Web開発基礎 (HTML & CSS)"
+    },
+    {
+      "nodeCode": "ND_F002",
+      "nodeName": "JavaScript 基礎"
+    },
+    {
+      "nodeCode": "ND_V001",
+      "nodeName": "バージョン管理 (Git)"
+    },
+    {
+      "nodeCode": "ND_F003",
+      "nodeName": "フロントエンドフレームワーク"
+    },
+    {
+      "nodeCode": "ND_B001",
+      "nodeName": "バックエンド基礎 (言語と環境)"
+    },
+    {
+      "nodeCode": "ND_DB01",
+      "nodeName": "データベース基礎"
+    },
+    {
+      "nodeCode": "ND_A001",
+      "nodeName": "API 設計と開発"
+    },
+    {
+      "nodeCode": "ND_D001",
+      "nodeName": "Webセキュリティ"
+    },
+    {
+      "nodeCode": "ND_O001",
+      "nodeName": "クラウドとインフラ (DevOps)"
+    },
+    {
+      "nodeCode": "ND_P001",
+      "nodeName": "フルスタック統合プロジェクト"
+    }
+  ],
+  "quests": [
+    {
+      "questCode": "ND_F001_Q01",
+      "nodeCode": "ND_F001",
+      "questOrder": 1,
+      "questName": "HTML: 基本構造とセマンティクス",
+      "questDetail": "HTMLの基本的な構造とセマンティック要素を理解し、適切なHTMLマークアップを作成できるようになることを目指します。文書構造の重要性とアクセシビリティの基礎を学びます。",
+      "exp": 30,
+      "skillPoint": 1,
+      "difficulty": "1",
+      "recommendedTime": "60m",
+      "learningObjectives": ["HTMLの基本構造を理解する", "セマンティック要素の使い方を習得する", "適切なHTMLマークアップを作成できる"],
+      "achievementConditions": ["HTML5の基本構造を説明できる", "セマンティック要素を使って文書構造を作成できる", "アクセシビリティを考慮したHTMLを書ける"],
+      "checklistItems": ["HTML5の基本構造を理解する", "セマンティック要素（header, nav, main, article, section, footer）を学ぶ", "適切な見出しタグ（h1-h6）の使い方を習得する", "リスト（ul, ol, dl）の使い方を理解する", "フォーム要素の基本を学ぶ"]
+    },
+    {
+      "questCode": "ND_F001_Q02",
+      "nodeCode": "ND_F001",
+      "questOrder": 2,
+      "questName": "CSS: セレクタとカスケード",
+      "questDetail": "CSSのセレクタの種類とカスケードの仕組みを理解し、効率的なスタイリングができるようになることを目指します。CSSの基本概念と優先順位のルールを学びます。",
+      "exp": 35,
+      "skillPoint": 1,
+      "difficulty": "1",
+      "recommendedTime": "75m",
+      "learningObjectives": ["CSSセレクタの種類を理解する", "カスケードと継承の仕組みを習得する", "CSSの優先順位を理解する"],
+      "achievementConditions": ["様々なCSSセレクタを使い分けられる", "カスケードの仕組みを説明できる", "CSSの優先順位を理解して適用できる"],
+      "checklistItems": ["基本セレクタ（要素、クラス、ID）を理解する", "属性セレクタの使い方を学ぶ", "疑似クラスと疑似要素を習得する", "カスケードと継承の仕組みを理解する", "CSSの優先順位（詳細度）を学ぶ"]
+    },
+    {
+      "questCode": "ND_F001_Q03",
+      "nodeCode": "ND_F001",
+      "questOrder": 3,
+      "questName": "CSS: FlexboxとGridの基礎",
+      "questDetail": "FlexboxとCSS Gridの基本的な使い方を理解し、モダンなレイアウトを作成できるようになることを目指します。レスポンシブなレイアウトの基礎を学びます。",
+      "exp": 45,
+      "skillPoint": 2,
+      "difficulty": "2",
+      "recommendedTime": "120m",
+      "learningObjectives": ["Flexboxの基本概念と使い方を理解する", "CSS Gridの基本概念と使い方を理解する", "FlexboxとGridを使ったレイアウトを作成できる"],
+      "achievementConditions": ["Flexboxを使ってレイアウトを作成できる", "CSS Gridを使ってレイアウトを作成できる", "FlexboxとGridの使い分けができる"],
+      "checklistItems": ["Flexboxの基本概念（flex container, flex item）を理解する", "Flexboxの主軸と交差軸を学ぶ", "justify-contentとalign-itemsの使い方を習得する", "CSS Gridの基本概念（grid container, grid item）を理解する", "grid-template-columnsとgrid-template-rowsを学ぶ", "grid-areaとgrid-template-areasを習得する"]
+    },
+    {
+      "questCode": "ND_F001_Q04",
+      "nodeCode": "ND_F001",
+      "questOrder": 4,
+      "questName": "レスポンシブデザイン実装",
+      "questDetail": "メディアクエリを使ったレスポンシブデザインの実装方法を理解し、様々なデバイスに対応したWebページを作成できるようになることを目指します。モバイルファーストの考え方を学びます。",
+      "exp": 50,
+      "skillPoint": 2,
+      "difficulty": "2",
+      "recommendedTime": "150m",
+      "learningObjectives": ["メディアクエリの使い方を理解する", "レスポンシブデザインの実装方法を習得する", "モバイルファーストの考え方を理解する"],
+      "achievementConditions": ["メディアクエリを使ってレスポンシブデザインを実装できる", "様々なデバイスサイズに対応したレイアウトを作成できる", "モバイルファーストのアプローチでデザインできる"],
+      "checklistItems": ["メディアクエリの基本構文を理解する", "ブレークポイントの設定方法を学ぶ", "viewportメタタグの重要性を理解する", "モバイルファーストのアプローチを学ぶ", "フレキシブルな画像とメディアの実装方法を習得する", "実際のデバイスでテストする方法を学ぶ"]
+    },
+    {
+      "questCode": "ND_F002_Q01",
+      "nodeCode": "ND_F002",
+      "questOrder": 1,
+      "questName": "変数、データ型、演算子の理解",
+      "questDetail": "JavaScriptの基本的な変数の宣言方法、データ型の種類、そして各種演算子の使い方を理解し、基本的なプログラミングができるようになることを目指します。JavaScriptの基礎を固めます。",
+      "exp": 40,
+      "skillPoint": 2,
+      "difficulty": "1",
+      "recommendedTime": "90m",
+      "learningObjectives": ["変数の宣言方法（var, let, const）を理解する", "JavaScriptのデータ型を理解する", "各種演算子の使い方を習得する"],
+      "achievementConditions": ["適切な変数宣言方法を選択できる", "データ型の違いを説明できる", "演算子を使って計算や比較ができる"],
+      "checklistItems": ["var, let, constの違いを理解する", "プリミティブ型（string, number, boolean, null, undefined）を学ぶ", "オブジェクト型の基本を理解する", "算術演算子（+, -, *, /, %）を習得する", "比較演算子（==, ===, !=, !==, <, >）を学ぶ", "論理演算子（&&, ||, !）を理解する"]
+    },
+    {
+      "questCode": "ND_F002_Q02",
+      "nodeCode": "ND_F002",
+      "questOrder": 2,
+      "questName": "制御構文と関数の実装",
+      "questDetail": "条件分岐（if/else、switch）やループ（for、while）などの制御構文、そして関数の定義と呼び出し方法を理解し、より複雑なプログラムを書けるようになることを目指します。プログラミングの基本構造を学びます。",
+      "exp": 50,
+      "skillPoint": 2,
+      "difficulty": "2",
+      "recommendedTime": "120m",
+      "learningObjectives": ["条件分岐構文を理解する", "ループ構文を理解する", "関数の定義と呼び出し方法を習得する"],
+      "achievementConditions": ["if/elseやswitchを使って条件分岐を実装できる", "forやwhileを使ってループ処理を実装できる", "関数を定義して呼び出せる"],
+      "checklistItems": ["if/else文の使い方を理解する", "switch文の使い方を学ぶ", "forループの基本を習得する", "whileループとdo-whileループを理解する", "関数の定義方法（function宣言、関数式、アロー関数）を学ぶ", "引数と戻り値の使い方を理解する", "スコープの概念を学ぶ"]
+    },
+    {
+      "questCode": "ND_F002_Q03",
+      "nodeCode": "ND_F002",
+      "questOrder": 3,
+      "questName": "DOM操作とイベント処理",
+      "questDetail": "JavaScriptを使ってHTML要素を操作する方法（DOM操作）と、ユーザーの操作に応じた処理を実装する方法（イベント処理）を理解し、インタラクティブなWebページを作成できるようになることを目指します。",
+      "exp": 55,
+      "skillPoint": 2,
+      "difficulty": "2",
+      "recommendedTime": "150m",
+      "learningObjectives": ["DOMの基本概念を理解する", "DOM要素の取得と操作方法を習得する", "イベントリスナーの実装方法を理解する"],
+      "achievementConditions": ["DOM要素を取得して操作できる", "要素の内容や属性を変更できる", "イベントリスナーを実装してユーザー操作に対応できる"],
+      "checklistItems": ["DOMの基本概念を理解する", "getElementById、querySelectorなどの要素取得方法を学ぶ", "要素の内容（textContent、innerHTML）を変更する方法を習得する", "要素の属性（setAttribute、getAttribute）を操作する方法を理解する", "要素の追加・削除（appendChild、removeChild）を学ぶ", "イベントリスナーの追加方法（addEventListener）を習得する", "クリック、入力、フォーカスなどの主要イベントを理解する"]
+    },
+    {
+      "questCode": "ND_F002_Q04",
+      "nodeCode": "ND_F002",
+      "questOrder": 4,
+      "questName": "ES6+の新機能 (Async/Await, Promise)",
+      "questDetail": "ES6以降のJavaScriptの新機能、特に非同期処理を扱うPromiseとasync/awaitを理解し、非同期処理を適切に扱えるようになることを目指します。モダンなJavaScriptの書き方を学びます。",
+      "exp": 60,
+      "skillPoint": 3,
+      "difficulty": "3",
+      "recommendedTime": "180m",
+      "learningObjectives": ["Promiseの基本概念を理解する", "async/awaitの使い方を習得する", "非同期処理のエラーハンドリングを理解する"],
+      "achievementConditions": ["Promiseを使って非同期処理を実装できる", "async/awaitを使って非同期処理を記述できる", "非同期処理のエラーを適切に処理できる"],
+      "checklistItems": ["コールバック地獄の問題を理解する", "Promiseの基本構文を学ぶ", "then()とcatch()の使い方を習得する", "Promise.all()とPromise.race()を理解する", "async関数の定義方法を学ぶ", "awaitキーワードの使い方を習得する", "try-catchを使ったエラーハンドリングを理解する", "fetch APIと組み合わせた実践的な使い方を学ぶ"]
+    },
+    {
+      "questCode": "ND_V001_Q01",
+      "nodeCode": "ND_V001",
+      "questOrder": 1,
+      "questName": "Git: 基本コマンド (commit, push, pull)",
+      "questDetail": "Gitの基本的なコマンド（commit、push、pull）を理解し、バージョン管理の基本操作ができるようになることを目指します。リポジトリの作成から変更の記録、リモートとの同期までを学びます。",
+      "exp": 35,
+      "skillPoint": 1,
+      "difficulty": "1",
+      "recommendedTime": "90m",
+      "learningObjectives": ["Gitの基本概念を理解する", "基本的なGitコマンドを習得する", "リモートリポジトリとの連携方法を理解する"],
+      "achievementConditions": ["Gitリポジトリを初期化できる", "変更をコミットして履歴を管理できる", "リモートリポジトリにpush/pullできる"],
+      "checklistItems": ["Gitの基本概念（リポジトリ、コミット、ブランチ）を理解する", "git initでリポジトリを初期化する方法を学ぶ", "git addで変更をステージングする方法を習得する", "git commitで変更をコミットする方法を理解する", "git statusとgit logで状態を確認する方法を学ぶ", "git pushでリモートに送信する方法を習得する", "git pullでリモートから取得する方法を理解する"]
+    },
+    {
+      "questCode": "ND_V001_Q02",
+      "nodeCode": "ND_V001",
+      "questOrder": 2,
+      "questName": "Git: ブランチとマージ、コンフリクト解決",
+      "questDetail": "Gitのブランチ機能とマージ操作、そしてコンフリクトが発生した際の解決方法を理解し、複数の機能を並行して開発できるようになることを目指します。チーム開発の基礎を学びます。",
+      "exp": 45,
+      "skillPoint": 2,
+      "difficulty": "2",
+      "recommendedTime": "120m",
+      "learningObjectives": ["ブランチの作成と切り替え方法を理解する", "マージの仕組みと実行方法を習得する", "コンフリクトの解決方法を理解する"],
+      "achievementConditions": ["ブランチを作成して切り替えられる", "ブランチをマージできる", "コンフリクトを解決できる"],
+      "checklistItems": ["ブランチの概念を理解する", "git branchでブランチを作成・一覧表示する方法を学ぶ", "git checkout/git switchでブランチを切り替える方法を習得する", "git mergeでブランチをマージする方法を理解する", "マージコンフリクトが発生する原因を学ぶ", "コンフリクトを解決する手順を習得する", "git rebaseの基本を理解する"]
+    },
+    {
+      "questCode": "ND_V001_Q03",
+      "nodeCode": "ND_V001",
+      "questOrder": 3,
+      "questName": "GitHub/GitLab連携とプルリクエスト",
+      "questDetail": "GitHubやGitLabなどのリモートリポジトリサービスとの連携方法と、プルリクエスト（マージリクエスト）の作成・レビュー方法を理解し、チーム開発のワークフローを習得することを目指します。",
+      "exp": 50,
+      "skillPoint": 2,
+      "difficulty": "2",
+      "recommendedTime": "90m",
+      "learningObjectives": ["GitHub/GitLabの基本操作を理解する", "プルリクエストの作成方法を習得する", "コードレビューのプロセスを理解する"],
+      "achievementConditions": ["GitHub/GitLabにリポジトリを作成できる", "プルリクエストを作成できる", "コードレビューに参加できる"],
+      "checklistItems": ["GitHub/GitLabアカウントの作成方法を学ぶ", "リモートリポジトリの作成とクローン方法を理解する", "git remoteでリモートを設定する方法を習得する", "フォークとクローンの違いを理解する", "プルリクエストの作成手順を学ぶ", "コードレビューのコメント方法を習得する", "マージ戦略（squash、rebase、merge）を理解する"]
+    },
+    {
+      "questCode": "ND_F003_Q01",
+      "nodeCode": "ND_F003",
+      "questOrder": 1,
+      "questName": "React: コンポーネントとJSX",
+      "questDetail": "Reactの基本概念であるコンポーネントとJSXの書き方を理解し、再利用可能なUIコンポーネントを作成できるようになることを目指します。Reactの基礎を固めます。",
+      "exp": 60,
+      "skillPoint": 3,
+      "difficulty": "3",
+      "recommendedTime": "180m",
+      "learningObjectives": ["Reactの基本概念を理解する", "JSXの書き方を習得する", "関数コンポーネントとクラスコンポーネントを理解する"],
+      "achievementConditions": ["Reactコンポーネントを作成できる", "JSXを使ってUIを記述できる", "コンポーネントを組み合わせてアプリケーションを構築できる"],
+      "checklistItems": ["Reactの基本概念（コンポーネント、仮想DOM）を理解する", "JSXの基本構文を学ぶ", "関数コンポーネントの作成方法を習得する", "JSXで式を埋め込む方法を理解する", "条件付きレンダリングを学ぶ", "リストとキーの使い方を習得する", "イベントハンドリングの基本を理解する"]
+    },
+    {
+      "questCode": "ND_F003_Q02",
+      "nodeCode": "ND_F003",
+      "questOrder": 2,
+      "questName": "React: StateとPropsの管理",
+      "questDetail": "ReactのStateとPropsの概念を理解し、コンポーネント間でデータをやり取りする方法を習得することを目指します。コンポーネントの状態管理の基礎を学びます。",
+      "exp": 65,
+      "skillPoint": 3,
+      "difficulty": "3",
+      "recommendedTime": "210m",
+      "learningObjectives": ["Stateの概念と使い方を理解する", "Propsの受け渡し方法を習得する", "親子コンポーネント間のデータフローを理解する"],
+      "achievementConditions": ["useStateを使ってStateを管理できる", "Propsを使ってデータを渡せる", "親子コンポーネント間でデータをやり取りできる"],
+      "checklistItems": ["Stateの概念を理解する", "useStateフックの使い方を学ぶ", "Stateの更新方法を習得する", "Propsの基本を理解する", "Propsの型定義を学ぶ", "親から子へのPropsの受け渡しを習得する", "子から親へのコールバック関数の受け渡しを理解する", "条件付きレンダリングとStateの組み合わせを学ぶ"]
+    },
+    {
+      "questCode": "ND_F003_Q03",
+      "nodeCode": "ND_F003",
+      "questOrder": 3,
+      "questName": "React: Hooks (useState, useEffect) の活用",
+      "questDetail": "React Hooks、特にuseStateとuseEffectの使い方を理解し、関数コンポーネントでライフサイクルや副作用を扱えるようになることを目指します。モダンなReactの書き方を学びます。",
+      "exp": 70,
+      "skillPoint": 3,
+      "difficulty": "4",
+      "recommendedTime": "240m",
+      "learningObjectives": ["React Hooksの基本概念を理解する", "useEffectの使い方を習得する", "カスタムフックの作成方法を理解する"],
+      "achievementConditions": ["useStateとuseEffectを組み合わせて使える", "副作用を適切に処理できる", "カスタムフックを作成できる"],
+      "checklistItems": ["React Hooksの基本概念を理解する", "useStateの詳細な使い方を学ぶ", "useEffectの基本構文を習得する", "依存配列の使い方を理解する", "クリーンアップ関数の使い方を学ぶ", "useContextの基本を習得する", "カスタムフックの作成方法を理解する", "useMemoとuseCallbackの使い方を学ぶ"]
+    },
+    {
+      "questCode": "ND_F003_Q04",
+      "nodeCode": "ND_F003",
+      "questOrder": 4,
+      "questName": "React: ルーティングとAPI連携",
+      "questDetail": "React Routerを使ったルーティング機能と、外部APIとの連携方法を理解し、実践的なSPA（Single Page Application）を作成できるようになることを目指します。",
+      "exp": 75,
+      "skillPoint": 3,
+      "difficulty": "4",
+      "recommendedTime": "270m",
+      "learningObjectives": ["React Routerの使い方を理解する", "APIとの連携方法を習得する", "非同期データの取得と表示を理解する"],
+      "achievementConditions": ["React Routerでルーティングを実装できる", "APIからデータを取得して表示できる", "ローディング状態とエラーハンドリングを実装できる"],
+      "checklistItems": ["React Routerのインストールとセットアップを学ぶ", "BrowserRouterとRoutesの使い方を習得する", "RouteとLinkの使い方を理解する", "useNavigateとuseParamsの使い方を学ぶ", "fetch APIやaxiosでAPIを呼び出す方法を習得する", "useEffectとStateを組み合わせたデータ取得を理解する", "ローディング状態の管理方法を学ぶ", "エラーハンドリングの実装方法を習得する"]
+    },
+    {
+      "questCode": "ND_B001_Q01",
+      "nodeCode": "ND_B001",
+      "questOrder": 1,
+      "questName": "Node.js環境構築とモジュールシステム",
+      "questDetail": "Node.jsの環境構築と、CommonJSやES Modulesなどのモジュールシステムを理解し、Node.jsアプリケーションの基礎を学ぶことを目指します。サーバーサイドJavaScriptの入門です。",
+      "exp": 60,
+      "skillPoint": 3,
+      "difficulty": "3",
+      "recommendedTime": "150m",
+      "learningObjectives": ["Node.jsの環境構築方法を理解する", "モジュールシステムの使い方を習得する", "npmの基本操作を理解する"],
+      "achievementConditions": ["Node.jsをインストールして動作確認できる", "モジュールのインポート/エクスポートができる", "npmでパッケージを管理できる"],
+      "checklistItems": ["Node.jsのインストール方法を学ぶ", "Node.jsのバージョン確認方法を理解する", "CommonJS（require/module.exports）の使い方を習得する", "ES Modules（import/export）の使い方を学ぶ", "package.jsonの作成と編集方法を理解する", "npm installでパッケージをインストールする方法を習得する", "npm scriptsの使い方を学ぶ"]
+    },
+    {
+      "questCode": "ND_B001_Q02",
+      "nodeCode": "ND_B001",
+      "questOrder": 2,
+      "questName": "Express: ルーティングとミドルウェア",
+      "questDetail": "Expressフレームワークを使ったルーティング設定とミドルウェアの実装方法を理解し、基本的なWebサーバーを構築できるようになることを目指します。",
+      "exp": 65,
+      "skillPoint": 3,
+      "difficulty": "3",
+      "recommendedTime": "180m",
+      "learningObjectives": ["Expressの基本設定を理解する", "ルーティングの実装方法を習得する", "ミドルウェアの使い方を理解する"],
+      "achievementConditions": ["ExpressでWebサーバーを起動できる", "ルーティングを実装できる", "ミドルウェアを作成して使用できる"],
+      "checklistItems": ["Expressのインストール方法を学ぶ", "基本的なExpressアプリケーションの作成方法を理解する", "app.get()、app.post()などのルーティングメソッドを習得する", "ルートパラメータとクエリパラメータの取得方法を学ぶ", "ミドルウェアの概念を理解する", "app.use()でミドルウェアを登録する方法を習得する", "カスタムミドルウェアの作成方法を学ぶ", "next()の使い方を理解する"]
+    },
+    {
+      "questCode": "ND_B001_Q03",
+      "nodeCode": "ND_B001",
+      "questOrder": 3,
+      "questName": "Express: テンプレートエンジンと静的ファイル配信",
+      "questDetail": "Expressでテンプレートエンジン（EJS、Pugなど）を使った動的なHTML生成と、静的ファイル（CSS、JavaScript、画像など）の配信方法を理解することを目指します。",
+      "exp": 70,
+      "skillPoint": 3,
+      "difficulty": "3",
+      "recommendedTime": "150m",
+      "learningObjectives": ["テンプレートエンジンの使い方を理解する", "静的ファイルの配信方法を習得する", "動的なHTML生成方法を理解する"],
+      "achievementConditions": ["テンプレートエンジンを使ってHTMLを生成できる", "静的ファイルを配信できる", "動的なコンテンツを表示できる"],
+      "checklistItems": ["テンプレートエンジンの概念を理解する", "EJSのインストールと設定方法を学ぶ", "res.render()でテンプレートをレンダリングする方法を習得する", "テンプレートに変数を渡す方法を理解する", "express.static()で静的ファイルを配信する方法を学ぶ", "publicディレクトリの設定方法を習得する", "レイアウトとパーシャルの使い方を理解する"]
+    },
+    {
+      "questCode": "ND_B001_Q04",
+      "nodeCode": "ND_B001",
+      "questOrder": 4,
+      "questName": "環境変数と設定ファイルの管理",
+      "questDetail": "環境変数と設定ファイルを使ったアプリケーション設定の管理方法を理解し、開発環境と本番環境で適切に設定を切り替えられるようになることを目指します。",
+      "exp": 75,
+      "skillPoint": 3,
+      "difficulty": "4",
+      "recommendedTime": "120m",
+      "learningObjectives": ["環境変数の使い方を理解する", "dotenvパッケージの使い方を習得する", "設定ファイルの管理方法を理解する"],
+      "achievementConditions": ["環境変数を設定して使用できる", ".envファイルを管理できる", "環境ごとに設定を切り替えられる"],
+      "checklistItems": ["環境変数の概念を理解する", "process.envで環境変数にアクセスする方法を学ぶ", "dotenvパッケージのインストールと設定方法を習得する", ".envファイルの作成と管理方法を理解する", ".gitignoreに.envを追加する重要性を学ぶ", "環境ごとの設定ファイル（.env.development、.env.production）の使い方を習得する", "設定のバリデーション方法を理解する"]
+    },
+    {
+      "questCode": "ND_DB01_Q01",
+      "nodeCode": "ND_DB01",
+      "questOrder": 1,
+      "questName": "RDBとSQLの基本 (SELECT, etc.)",
+      "questDetail": "リレーショナルデータベース（RDB）の基本概念とSQLの基本的な操作（SELECT、INSERT、UPDATE、DELETE）を理解し、データベースの基本的な操作ができるようになることを目指します。",
+      "exp": 60,
+      "skillPoint": 3,
+      "difficulty": "3",
+      "recommendedTime": "180m",
+      "learningObjectives": ["RDBの基本概念を理解する", "SQLの基本構文を習得する", "基本的なCRUD操作を理解する"],
+      "achievementConditions": ["RDBの概念を説明できる", "SELECT文でデータを取得できる", "INSERT、UPDATE、DELETE文を実行できる"],
+      "checklistItems": ["リレーショナルデータベースの基本概念を理解する", "テーブル、カラム、行の概念を学ぶ", "SELECT文の基本構文を習得する", "WHERE句で条件を指定する方法を理解する", "ORDER BYでソートする方法を学ぶ", "INSERT文でデータを追加する方法を習得する", "UPDATE文でデータを更新する方法を理解する", "DELETE文でデータを削除する方法を学ぶ"]
+    },
+    {
+      "questCode": "ND_DB01_Q02",
+      "nodeCode": "ND_DB01",
+      "questOrder": 2,
+      "questName": "テーブル設計と正規化の概念",
+      "questDetail": "データベースのテーブル設計方法と正規化の概念を理解し、効率的で保守しやすいデータベーススキーマを設計できるようになることを目指します。データの整合性と冗長性のバランスを学びます。",
+      "exp": 75,
+      "skillPoint": 3,
+      "difficulty": "4",
+      "recommendedTime": "210m",
+      "learningObjectives": ["テーブル設計の基本原則を理解する", "正規化の概念を習得する", "リレーションシップの設計方法を理解する"],
+      "achievementConditions": ["適切なテーブル設計ができる", "正規化の各段階を説明できる", "適切なリレーションシップを設計できる"],
+      "checklistItems": ["テーブル設計の基本原則を理解する", "主キーと外部キーの概念を学ぶ", "1対1、1対多、多対多のリレーションシップを理解する", "第1正規形（1NF）の概念を習得する", "第2正規形（2NF）の概念を理解する", "第3正規形（3NF）の概念を学ぶ", "正規化のメリットとデメリットを理解する", "実際のテーブル設計を実践する"]
+    },
+    {
+      "questCode": "ND_DB01_Q03",
+      "nodeCode": "ND_DB01",
+      "questOrder": 3,
+      "questName": "データベース接続とORM (Prisma等) の利用",
+      "questDetail": "アプリケーションからデータベースに接続する方法と、ORM（Object-Relational Mapping）ツールであるPrismaの使い方を理解し、型安全なデータベース操作ができるようになることを目指します。",
+      "exp": 80,
+      "skillPoint": 4,
+      "difficulty": "4",
+      "recommendedTime": "240m",
+      "learningObjectives": ["データベース接続の仕組みを理解する", "Prismaの基本概念を習得する", "Prismaを使ったCRUD操作を理解する"],
+      "achievementConditions": ["データベースに接続できる", "Prismaスキーマを定義できる", "Prisma Clientを使ってデータ操作ができる"],
+      "checklistItems": ["データベース接続の基本概念を理解する", "接続文字列の設定方法を学ぶ", "Prismaのインストールと初期化方法を習得する", "Prismaスキーマの書き方を理解する", "Prisma Clientの生成方法を学ぶ", "Prisma Clientを使ったデータ取得（findMany、findUnique）を習得する", "Prisma Clientを使ったデータ作成（create）を理解する", "Prisma Clientを使ったデータ更新（update）と削除（delete）を学ぶ", "マイグレーションの実行方法を習得する"]
+    },
+    {
+      "questCode": "ND_A001_Q01",
+      "nodeCode": "ND_A001",
+      "questOrder": 1,
+      "questName": "RESTful API設計の原則",
+      "questDetail": "RESTful APIの設計原則を理解し、適切なエンドポイント設計とHTTPメソッドの使い分けができるようになることを目指します。RESTfulなAPIの設計方法を学びます。",
+      "exp": 70,
+      "skillPoint": 3,
+      "difficulty": "4",
+      "recommendedTime": "150m",
+      "learningObjectives": ["RESTful APIの基本原則を理解する", "HTTPメソッドの使い分けを習得する", "リソース指向の設計方法を理解する"],
+      "achievementConditions": ["RESTful APIの原則を説明できる", "適切なHTTPメソッドを選択できる", "RESTfulなエンドポイントを設計できる"],
+      "checklistItems": ["RESTful APIの基本概念を理解する", "HTTPメソッド（GET、POST、PUT、PATCH、DELETE）の使い分けを学ぶ", "リソース指向のURL設計を習得する", "ステートレスな設計の重要性を理解する", "適切なHTTPステータスコードの使い方を学ぶ", "APIバージョニングの方法を理解する", "エンドポイントの命名規則を習得する"]
+    },
+    {
+      "questCode": "ND_A001_Q02",
+      "nodeCode": "ND_A001",
+      "questOrder": 2,
+      "questName": "HTTPステータスコードとエラーハンドリング",
+      "questDetail": "適切なHTTPステータスコードの使い方と、APIでのエラーハンドリング方法を理解し、ユーザーフレンドリーなエラーレスポンスを返せるようになることを目指します。",
+      "exp": 75,
+      "skillPoint": 3,
+      "difficulty": "4",
+      "recommendedTime": "120m",
+      "learningObjectives": ["HTTPステータスコードの種類を理解する", "適切なステータスコードの選択方法を習得する", "エラーハンドリングの実装方法を理解する"],
+      "achievementConditions": ["適切なHTTPステータスコードを選択できる", "エラーレスポンスを適切に設計できる", "エラーハンドリングを実装できる"],
+      "checklistItems": ["HTTPステータスコードの分類（2xx、4xx、5xx）を理解する", "成功系ステータスコード（200、201、204）の使い方を学ぶ", "クライアントエラー系ステータスコード（400、401、403、404）を習得する", "サーバーエラー系ステータスコード（500、502、503）を理解する", "エラーレスポンスの構造を設計する方法を学ぶ", "try-catchを使ったエラーハンドリングを習得する", "エラーミドルウェアの実装方法を理解する"]
+    },
+    {
+      "questCode": "ND_A001_Q03",
+      "nodeCode": "ND_A001",
+      "questOrder": 3,
+      "questName": "バックエンドとデータベースの統合",
+      "questDetail": "バックエンドAPIとデータベースを統合し、実際のデータを扱うAPIエンドポイントを実装できるようになることを目指します。CRUD操作を含む完全なAPIを構築します。",
+      "exp": 80,
+      "skillPoint": 4,
+      "difficulty": "5",
+      "recommendedTime": "270m",
+      "learningObjectives": ["APIとデータベースの統合方法を理解する", "CRUD操作を含むAPIを実装する方法を習得する", "データバリデーションを理解する"],
+      "achievementConditions": ["データベースと連携したAPIを実装できる", "CRUD操作を含む完全なAPIを作成できる", "データバリデーションを実装できる"],
+      "checklistItems": ["PrismaとExpressの統合方法を理解する", "GETエンドポイントでデータを取得する実装を学ぶ", "POSTエンドポイントでデータを作成する実装を習得する", "PUT/PATCHエンドポイントでデータを更新する実装を理解する", "DELETEエンドポイントでデータを削除する実装を学ぶ", "リクエストボディのバリデーション方法を習得する", "エラーハンドリングの実装を理解する", "APIのテスト方法を学ぶ"]
+    },
+    {
+      "questCode": "ND_D001_Q01",
+      "nodeCode": "ND_D001",
+      "questOrder": 1,
+      "questName": "認証と認可 (JWT, セッション) の仕組み",
+      "questDetail": "認証と認可の違いを理解し、JWT（JSON Web Token）やセッションを使った認証システムの実装方法を学ぶことを目指します。セキュアな認証の基礎を固めます。",
+      "exp": 70,
+      "skillPoint": 3,
+      "difficulty": "4",
+      "recommendedTime": "180m",
+      "learningObjectives": ["認証と認可の違いを理解する", "JWTの仕組みを習得する", "セッション管理の方法を理解する"],
+      "achievementConditions": ["認証と認可の違いを説明できる", "JWTを使った認証を実装できる", "セッション管理を実装できる"],
+      "checklistItems": ["認証と認可の違いを理解する", "JWTの基本構造（Header、Payload、Signature）を学ぶ", "JWTの生成と検証方法を習得する", "JWTを使ったログイン機能の実装を理解する", "JWTを使った認証ミドルウェアの実装を学ぶ", "セッション管理の基本概念を習得する", "セッションストアの使い方を理解する", "認証トークンのリフレッシュ方法を学ぶ"]
+    },
+    {
+      "questCode": "ND_D001_Q02",
+      "nodeCode": "ND_D001",
+      "questOrder": 2,
+      "questName": "XSSとCSRF攻撃の防御対策",
+      "questDetail": "XSS（Cross-Site Scripting）とCSRF（Cross-Site Request Forgery）攻撃の仕組みを理解し、適切な防御対策を実装できるようになることを目指します。Webアプリケーションのセキュリティを強化します。",
+      "exp": 85,
+      "skillPoint": 4,
+      "difficulty": "5",
+      "recommendedTime": "150m",
+      "learningObjectives": ["XSS攻撃の仕組みを理解する", "CSRF攻撃の仕組みを理解する", "防御対策の実装方法を習得する"],
+      "achievementConditions": ["XSS攻撃の仕組みを説明できる", "CSRF攻撃の仕組みを説明できる", "適切な防御対策を実装できる"],
+      "checklistItems": ["XSS攻撃の種類（反射型、格納型、DOM型）を理解する", "XSS攻撃の防御方法（エスケープ処理）を学ぶ", "Content Security Policy（CSP）の設定方法を習得する", "CSRF攻撃の仕組みを理解する", "CSRFトークンの実装方法を学ぶ", "SameSite Cookie属性の使い方を習得する", "helmet.jsなどのセキュリティミドルウェアを理解する", "入力値のサニタイズ方法を学ぶ"]
+    },
+    {
+      "questCode": "ND_D001_Q03",
+      "nodeCode": "ND_D001",
+      "questOrder": 3,
+      "questName": "パスワードのハッシュ化とセキュアなデータ保管",
+      "questDetail": "パスワードの適切なハッシュ化方法と、機密情報を安全に保管する方法を理解し、セキュアな認証システムを実装できるようになることを目指します。",
+      "exp": 90,
+      "skillPoint": 4,
+      "difficulty": "5",
+      "recommendedTime": "120m",
+      "learningObjectives": ["パスワードハッシュ化の重要性を理解する", "bcryptなどのハッシュ化ライブラリの使い方を習得する", "機密情報の安全な保管方法を理解する"],
+      "achievementConditions": ["パスワードを適切にハッシュ化できる", "ハッシュ化されたパスワードを検証できる", "機密情報を安全に保管できる"],
+      "checklistItems": ["パスワードを平文で保存することの危険性を理解する", "ハッシュ化とソルトの概念を学ぶ", "bcryptのインストールと使い方を習得する", "パスワードのハッシュ化処理を実装する方法を理解する", "ハッシュ化されたパスワードの検証方法を学ぶ", "環境変数を使った機密情報の管理を習得する", "データベースでの機密情報の暗号化方法を理解する", "セキュアなパスワードポリシーの実装を学ぶ"]
+    },
+    {
+      "questCode": "ND_O001_Q01",
+      "nodeCode": "ND_O001",
+      "questOrder": 1,
+      "questName": "Docker: コンテナの基本概念と操作",
+      "questDetail": "Dockerの基本概念とコンテナの操作方法を理解し、アプリケーションをコンテナ化できるようになることを目指します。コンテナ技術の基礎を学びます。",
+      "exp": 70,
+      "skillPoint": 3,
+      "difficulty": "4",
+      "recommendedTime": "180m",
+      "learningObjectives": ["Dockerの基本概念を理解する", "Dockerfileの書き方を習得する", "コンテナの基本操作を理解する"],
+      "achievementConditions": ["Dockerの概念を説明できる", "Dockerfileを作成できる", "コンテナを起動・停止・削除できる"],
+      "checklistItems": ["Dockerの基本概念（コンテナ、イメージ）を理解する", "Dockerのインストール方法を学ぶ", "Dockerfileの基本構文を習得する", "FROM、RUN、COPY、CMDなどの命令を理解する", "docker buildでイメージをビルドする方法を学ぶ", "docker runでコンテナを起動する方法を習得する", "docker ps、docker stop、docker rmなどの基本コマンドを理解する", "docker execでコンテナ内でコマンドを実行する方法を学ぶ"]
+    },
+    {
+      "questCode": "ND_O001_Q02",
+      "nodeCode": "ND_O001",
+      "questOrder": 2,
+      "questName": "Docker Composeによる複数コンテナ管理",
+      "questDetail": "Docker Composeを使った複数コンテナの管理方法を理解し、アプリケーションとデータベースを連携させた開発環境を構築できるようになることを目指します。",
+      "exp": 85,
+      "skillPoint": 4,
+      "difficulty": "5",
+      "recommendedTime": "210m",
+      "learningObjectives": ["Docker Composeの基本概念を理解する", "docker-compose.ymlの書き方を習得する", "複数コンテナの連携方法を理解する"],
+      "achievementConditions": ["docker-compose.ymlを作成できる", "複数コンテナを同時に起動できる", "コンテナ間のネットワークを設定できる"],
+      "checklistItems": ["Docker Composeの基本概念を理解する", "docker-compose.ymlの基本構文を学ぶ", "services、volumes、networksの定義方法を習得する", "環境変数の設定方法を理解する", "docker-compose upでコンテナを起動する方法を学ぶ", "docker-compose downでコンテナを停止する方法を習得する", "コンテナ間のネットワーク設定を理解する", "ボリュームマウントの設定方法を学ぶ", "依存関係の設定方法を習得する"]
+    },
+    {
+      "questCode": "ND_O001_Q03",
+      "nodeCode": "ND_O001",
+      "questOrder": 3,
+      "questName": "AWS/Amplify: デプロイとホスティングの基本",
+      "questDetail": "AWS Amplifyを使ったアプリケーションのデプロイとホスティング方法を理解し、実際にWebアプリケーションを公開できるようになることを目指します。クラウドデプロイの基礎を学びます。",
+      "exp": 90,
+      "skillPoint": 4,
+      "difficulty": "5",
+      "recommendedTime": "240m",
+      "learningObjectives": ["AWS Amplifyの基本概念を理解する", "アプリケーションのデプロイ方法を習得する", "ホスティングの設定方法を理解する"],
+      "achievementConditions": ["AWS Amplifyでアプリケーションをデプロイできる", "カスタムドメインを設定できる", "CI/CDパイプラインを設定できる"],
+      "checklistItems": ["AWS Amplifyの基本概念を理解する", "AWSアカウントの作成方法を学ぶ", "Amplify CLIのインストールと設定方法を習得する", "amplify initでプロジェクトを初期化する方法を理解する", "amplify add hostingでホスティングを追加する方法を学ぶ", "amplify publishでアプリケーションをデプロイする方法を習得する", "環境変数の設定方法を理解する", "カスタムドメインの設定方法を学ぶ", "CI/CDパイプラインの設定を理解する"]
+    },
+    {
+      "questCode": "ND_P001_Q01",
+      "nodeCode": "ND_P001",
+      "questOrder": 1,
+      "questName": "ToDoリストアプリのフルスタック実装",
+      "questDetail": "これまで学んだ知識を統合し、ToDoリストアプリケーションをフルスタックで実装することを目指します。フロントエンド、バックエンド、データベースを連携させた実践的なアプリケーションを構築します。",
+      "exp": 100,
+      "skillPoint": 5,
+      "difficulty": "5",
+      "recommendedTime": "300m",
+      "learningObjectives": ["フルスタックアプリケーションの構築方法を理解する", "フロントエンドとバックエンドの連携方法を習得する", "データベースとの統合を理解する"],
+      "achievementConditions": ["ToDoリストアプリをフルスタックで実装できる", "CRUD操作を含む完全なアプリケーションを作成できる", "デプロイまで完了できる"],
+      "checklistItems": ["プロジェクトの設計と要件定義を行う", "データベーススキーマを設計する", "バックエンドAPI（RESTful）を実装する", "フロントエンド（React）を実装する", "APIとフロントエンドを連携する", "認証機能を実装する", "エラーハンドリングを実装する", "レスポンシブデザインを実装する", "アプリケーションをデプロイする"]
+    },
+    {
+      "questCode": "ND_P001_Q02",
+      "nodeCode": "ND_P001",
+      "questOrder": 2,
+      "questName": "ミニブログ/SNS風アプリのフルスタック実装",
+      "questDetail": "より複雑な機能（投稿、コメント、いいね、フォローなど）を含むミニブログ/SNS風アプリケーションをフルスタックで実装することを目指します。実践的なWebアプリケーション開発の総仕上げです。",
+      "exp": 110,
+      "skillPoint": 5,
+      "difficulty": "5",
+      "recommendedTime": "480m",
+      "learningObjectives": ["複雑な機能を含むアプリケーションの構築方法を理解する", "リレーションシップを含むデータベース設計を習得する", "リアルタイム機能の実装方法を理解する"],
+      "achievementConditions": ["ミニブログ/SNS風アプリを実装できる", "複雑なリレーションシップを扱える", "ユーザー間のインタラクション機能を実装できる"],
+      "checklistItems": ["アプリケーションの要件定義と設計を行う", "複雑なデータベーススキーマを設計する", "ユーザー認証・認可機能を実装する", "投稿機能（CRUD）を実装する", "コメント機能を実装する", "いいね機能を実装する", "フォロー/フォロワー機能を実装する", "タイムライン機能を実装する", "画像アップロード機能を実装する", "検索機能を実装する", "アプリケーションをデプロイする"]
+    },
+    {
+      "questCode": "ND_P001_Q03",
+      "nodeCode": "ND_P001",
+      "questOrder": 3,
+      "questName": "アプリケーションの負荷テストと最適化",
+      "questDetail": "アプリケーションのパフォーマンスを測定し、ボトルネックを特定して最適化する方法を理解することを目指します。本番環境で安定して動作するアプリケーションを構築します。",
+      "exp": 120,
+      "skillPoint": 6,
+      "difficulty": "5",
+      "recommendedTime": "240m",
+      "learningObjectives": ["負荷テストの方法を理解する", "パフォーマンスの測定方法を習得する", "最適化の手法を理解する"],
+      "achievementConditions": ["負荷テストを実施できる", "パフォーマンスのボトルネックを特定できる", "適切な最適化を実施できる"],
+      "checklistItems": ["パフォーマンス測定ツールの使い方を理解する", "負荷テストツール（Apache Bench、k6など）を学ぶ", "データベースクエリの最適化方法を習得する", "インデックスの効果的な使い方を理解する", "N+1問題の解決方法を学ぶ", "キャッシュ戦略の実装方法を習得する", "CDNの活用方法を理解する", "画像の最適化方法を学ぶ", "コードの最適化（バンドルサイズの削減など）を習得する", "モニタリングとログの設定方法を理解する"]
+    }
+  ],
+  "questProgresses": [
+    {
+      "userId": "9a3f2d1e-8c7b-4a60-9d5f-3c8b7a4e2d1f",
+      "questCode": "ND_F001_Q01",
+      "progress": 30,
+      "statusCode": "PROGRESS"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "questCode": "ND_F001_Q01",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "questCode": "ND_F001_Q02",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "questCode": "ND_F001_Q03",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "questCode": "ND_F001_Q04",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "questCode": "ND_F002_Q01",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "questCode": "ND_F002_Q02",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "questCode": "ND_F002_Q03",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "questCode": "ND_F002_Q04",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "questCode": "ND_V001_Q01",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "questCode": "ND_V001_Q02",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "questCode": "ND_V001_Q03",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "questCode": "ND_F003_Q01",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_F001_Q01",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_F001_Q02",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_F001_Q03",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_F001_Q04",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_F002_Q01",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_F002_Q02",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_F002_Q03",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_F002_Q04",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_V001_Q01",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_V001_Q02",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_V001_Q03",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_F003_Q01",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_F003_Q02",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_F003_Q03",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_F003_Q04",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_B001_Q01",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_B001_Q02",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_B001_Q03",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_B001_Q04",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_DB01_Q01",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_DB01_Q02",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_DB01_Q03",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_A001_Q01",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_A001_Q02",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_A001_Q03",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_O001_Q01",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_O001_Q02",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_O001_Q03",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_P001_Q01",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_P001_Q02",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "questCode": "ND_P001_Q03",
+      "progress": 70,
+      "statusCode": "PROGRESS"
+    }
+  ],
+  "nodeProgresses": [
+    {
+      "userId": "9a3f2d1e-8c7b-4a60-9d5f-3c8b7a4e2d1f",
+      "nodeCode": "ND_F001",
+      "progress": 10,
+      "statusCode": "PROGRESS"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "nodeCode": "ND_F001",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "nodeCode": "ND_F002",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "nodeCode": "ND_V001",
+      "progress": 60,
+      "statusCode": "PROGRESS"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "nodeCode": "ND_F001",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "nodeCode": "ND_F002",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "nodeCode": "ND_V001",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "nodeCode": "ND_F003",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "nodeCode": "ND_B001",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "nodeCode": "ND_DB01",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "nodeCode": "ND_A001",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "nodeCode": "ND_D001",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "nodeCode": "ND_O001",
+      "progress": 100,
+      "statusCode": "COMPLETED"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "nodeCode": "ND_P001",
+      "progress": 70,
+      "statusCode": "PROGRESS"
+    }
+  ],
+  "skilltreeProgresses": [
+    {
+      "userId": "9a3f2d1e-8c7b-4a60-9d5f-3c8b7a4e2d1f",
+      "skilltreeCode": "FSD_001",
+      "progress": 5,
+      "statusCode": "PROGRESS"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "skilltreeCode": "FSD_001",
+      "progress": 45,
+      "statusCode": "PROGRESS"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "skilltreeCode": "FSD_001",
+      "progress": 85,
+      "statusCode": "PROGRESS"
+    }
+  ],
+  "usersSkills": [
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "skillCode": "SKILL_F001"
+    },
+    {
+      "userId": "1b4c3e2d-5f6g-7h8i-9j0k-1l2m3n4o5p6q",
+      "skillCode": "SKILL_F002"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "skillCode": "SKILL_F001"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "skillCode": "SKILL_F002"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "skillCode": "SKILL_V001"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "skillCode": "SKILL_F003"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "skillCode": "SKILL_B001"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "skillCode": "SKILL_DB01"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "skillCode": "SKILL_A001"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "skillCode": "SKILL_D001"
+    },
+    {
+      "userId": "a3b4c5d6-e7f8-9a0b-1c2d-3e4f5g6h7i8j",
+      "skillCode": "SKILL_O001"
+    }
+  ],
+  "skilltreesNodes": [
+    {
+      "skilltreeCode": "FSD_001",
+      "nodeCode": "ND_F001",
+      "nodeOrder": 1
+    },
+    {
+      "skilltreeCode": "FSD_001",
+      "nodeCode": "ND_F002",
+      "nodeOrder": 2
+    },
+    {
+      "skilltreeCode": "FSD_001",
+      "nodeCode": "ND_V001",
+      "nodeOrder": 3
+    },
+    {
+      "skilltreeCode": "FSD_001",
+      "nodeCode": "ND_F003",
+      "nodeOrder": 4
+    },
+    {
+      "skilltreeCode": "FSD_001",
+      "nodeCode": "ND_B001",
+      "nodeOrder": 5
+    },
+    {
+      "skilltreeCode": "FSD_001",
+      "nodeCode": "ND_DB01",
+      "nodeOrder": 6
+    },
+    {
+      "skilltreeCode": "FSD_001",
+      "nodeCode": "ND_A001",
+      "nodeOrder": 7
+    },
+    {
+      "skilltreeCode": "FSD_001",
+      "nodeCode": "ND_D001",
+      "nodeOrder": 8
+    },
+    {
+      "skilltreeCode": "FSD_001",
+      "nodeCode": "ND_O001",
+      "nodeOrder": 9
+    },
+    {
+      "skilltreeCode": "FSD_001",
+      "nodeCode": "ND_P001",
+      "nodeOrder": 10
+    }
+  ],
+  "nodeDependencies": []
+}
