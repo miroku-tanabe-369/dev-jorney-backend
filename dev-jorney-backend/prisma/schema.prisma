@@ -19,7 +19,8 @@ model UsersMst {
   name            String   @db.VarChar(255)
   email           String   @unique @db.VarChar(255)
   profile         String?  @db.VarChar(500)
-  s3ObjectKey     String?  @map("s3_object_key") @db.VarChar(255)
+  //TODO: Base64形式に修正
+  icon            String?  @map("icon") @db.VarChar(255)
   currentLevel    Int      @map("current_level")
   totalExp        Int      @map("total_exp")
   totalSkillPoint Int      @map("total_skill_point")
@@ -97,6 +98,7 @@ model NodesMst {
 model QuestMst {
   questCode            String @id @map("quest_code") @db.VarChar(255)
   nodeCode             String @map("node_code") @db.VarChar(255)
+  questOrder           Int @map("quest_order")
   questName            String @map("quest_name") @db.VarChar
   questDetail          String @map("quest_detail") @db.VarChar(500)
   exp                  Int
