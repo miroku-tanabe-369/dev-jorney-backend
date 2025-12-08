@@ -9,6 +9,12 @@ dotenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
+  // JSONレスポンスで日本語を正しく表示するための設定
+  app.use((req, res, next) => {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    next();
+  });
+  
   // グローバルなバリデーションパイプを設定
   app.useGlobalPipes(
     new ValidationPipe({
