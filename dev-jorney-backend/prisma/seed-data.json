@@ -1019,47 +1019,68 @@
   "usersSkills": [
     {
       "userId": "eeb7fa42-6b79-49e6-adf4-cab65d1257ff",
-      "skillCode": "SKILL_F001"
+      "skillCode": "SKILL_F001",
+      "level": "上級"
     },
     {
       "userId": "eeb7fa42-6b79-49e6-adf4-cab65d1257ff",
-      "skillCode": "SKILL_F002"
+      "skillCode": "SKILL_F002",
+      "level": "上級"
+    },
+    {
+      "userId": "eeb7fa42-6b79-49e6-adf4-cab65d1257ff",
+      "skillCode": "SKILL_V001",
+      "level": "上級"
+    },
+    {
+      "userId": "eeb7fa42-6b79-49e6-adf4-cab65d1257ff",
+      "skillCode": "SKILL_F003",
+      "level": "初級"
     },
     {
       "userId": "e94c712a-c2b2-4f04-888d-4b10d9d39ba0",
-      "skillCode": "SKILL_F001"
+      "skillCode": "SKILL_F001",
+      "level": "上級"
     },
     {
       "userId": "e94c712a-c2b2-4f04-888d-4b10d9d39ba0",
-      "skillCode": "SKILL_F002"
+      "skillCode": "SKILL_F002",
+      "level": "上級"
     },
     {
       "userId": "e94c712a-c2b2-4f04-888d-4b10d9d39ba0",
-      "skillCode": "SKILL_V001"
+      "skillCode": "SKILL_V001",
+      "level": "上級"
     },
     {
       "userId": "e94c712a-c2b2-4f04-888d-4b10d9d39ba0",
-      "skillCode": "SKILL_F003"
+      "skillCode": "SKILL_F003",
+      "level": "上級"
     },
     {
       "userId": "e94c712a-c2b2-4f04-888d-4b10d9d39ba0",
-      "skillCode": "SKILL_B001"
+      "skillCode": "SKILL_B001",
+      "level": "上級"
     },
     {
       "userId": "e94c712a-c2b2-4f04-888d-4b10d9d39ba0",
-      "skillCode": "SKILL_DB01"
+      "skillCode": "SKILL_DB01",
+      "level": "上級"
     },
     {
       "userId": "e94c712a-c2b2-4f04-888d-4b10d9d39ba0",
-      "skillCode": "SKILL_A001"
+      "skillCode": "SKILL_A001",
+      "level": "上級"
     },
     {
       "userId": "e94c712a-c2b2-4f04-888d-4b10d9d39ba0",
-      "skillCode": "SKILL_D001"
+      "skillCode": "SKILL_O001",
+      "level": "上級"
     },
     {
       "userId": "e94c712a-c2b2-4f04-888d-4b10d9d39ba0",
-      "skillCode": "SKILL_O001"
+      "skillCode": "SKILL_P001",
+      "level": "中級"
     }
   ],
   "skilltreesNodes": [

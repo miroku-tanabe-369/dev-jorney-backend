@@ -192,6 +192,7 @@ model LevelMst {
 model UsersSkillsTran {
   userId    String   @map("user_id") @db.Uuid
   skillCode String   @map("skill_code") @db.VarChar(255)
+  level     String   @map("level") @db.VarChar(255)
   createdBy String   @map("created_by") @db.Char(36)
   createdAt DateTime @default(now()) @map("created_at")
   updatedBy String   @map("updated_by") @db.Char(36)

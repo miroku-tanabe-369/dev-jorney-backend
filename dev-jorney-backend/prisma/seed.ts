@@ -293,7 +293,10 @@ async function main() {
               skillCode: userSkillData.skillCode,
             },
           },
-          data: userSkillData,
+          data: {
+            ...userSkillData,
+            updatedBy: userSkillData.updatedBy || defaultUserId,
+          },
         });
       } else {
         await prisma.usersSkillsTran.create({
