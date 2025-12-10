@@ -29,13 +29,13 @@ services:
       # target: builder # ← 開発時には削除し、ビルドは全ステージで行う
     container_name: dev-jorney-backend
     #ボリュームマウント後に再生成/デプロイ/起動を行う
-    command: sh -c "npm install && npx prisma generate && npx prisma migrate dev --name auto_migration && npm run start:dev"
+    command: sh -c "npm run start:dev"
     ports:
       - "3000:3000"
     env_file:
       - .env
     environment:
-      NODE_ENV: ${NODE_ENV}
+      NODE_ENV: ${NODE_ENV}エラーエラー
       DATABASE_HOST: ${DATABASE_HOST}
       DATABASE_PORT: ${DATABASE_PORT}
       DATABASE_USERNAME: ${DATABASE_USERNAME}
@@ -44,7 +44,8 @@ services:
       DATABASE_URL: ${DATABASE_URL}
     volumes:
       - .:/app  # ソースコードをマウント（ホットリロード用）
-      - /app/node_modules  # node_modulesはコンテナ内のものを使用
+      # - /app/node_modules  # node_modulesはコンテナ内のものを使用
+      # もともと匿名ボリュームを用いていたが、依存関係の問題が多発したため、修正
     depends_on:
       postgres:
         condition: service_healthy

@@ -173,15 +173,40 @@ export class UsersService {
       throw new NotFoundException(`User with ID ${userId} not found`);
     }
 
+    const userSkills = (await this.prisma.usersSkillsTran.findMany({
+      where: {
+        userId: userId,
+      },
+      select: {
+        level: true,
+        skill: {
+          select: {
+            skillName: true,
+          },
+        },
+      },
+    })) as unknown as Array<{
+      level: string;
+      skill: { skillName: string };
+    }>;
+
     return {
-      name: user.name,
-      email: user.email,
-      profile: user.profile,
-      icon: user.icon ?? null,
-      currentLevel: user.currentLevel,
-      totalExp: user.totalExp,
-      totalSkillPoint: user.totalSkillPoint,
-      completedQuestCount: user.completedQuestCount,
+      userDetail: {
+        name: user.name,
+        currentLevel: user.currentLevel,
+        email: user.email,
+        profile: user.profile,
+        icon: user.icon,
+        totalSkillPoint: user.totalSkillPoint,
+        completedQuestCount: user.completedQuestCount,
+      },
+      userSkills:
+        userSkills.length > 0
+          ? userSkills.map((us) => ({
+              skillName: us.skill.skillName,
+              level: us.level,
+            }))
+          : null,
     };
   }
 }
