@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UserDetailResponseDto } from './dto/userDetailResponse.dto';
 import { UserDashboardResponseDto } from './dto/userDashboardResponse.dto';
+import { updateProfileRequestDto } from './dto/updateProfileRequest.dto';
 
 @Injectable()
 export class UsersService {
@@ -208,6 +209,35 @@ export class UsersService {
             }))
           : null,
     };
+  }
+
+  /**
+   * プロフィール情報更新
+   * users_mstテーブルから更新
+   * 
+   * @param userId: Cognitoのsub（ユーザーID）
+   * @param updateProfileRequestDto: プロフィール情報更新リクエストDTO
+   * @throws NotFoundException
+   */
+  async updateProfile(
+    userId: string,
+    req: updateProfileRequestDto,
+  ){
+    // プロフィール情報を更新
+    await this.prisma.usersMst.update({
+      where: { userId },
+      data: {
+        name: req.name,
+        email: req.email,
+        profile: req.profile,
+        icon: req.icon,
+        updatedBy: userId, // 更新者を設定
+      },
+    });
+
+    // 更新後のデータを取得して返却
+    // これにより、フロントエンドで再取得する必要がなくなる
+    return this.getUserDetail(userId);
   }
 }
 

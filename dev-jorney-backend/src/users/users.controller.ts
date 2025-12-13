@@ -1,9 +1,16 @@
-import { Controller, Get, Param, ParseUUIDPipe, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, Put, Request, Body } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserDetailResponseDto } from './dto/userDetailResponse.dto';
 import { UserDashboardResponseDto } from './dto/userDashboardResponse.dto';
-// import { JwtAuthGuard } from '../auth/jwt-auth.guard'; // 認証ガード（今後実装）
+import { updateProfileRequestDto } from './dto/updateProfileRequest.dto';
 
+/**
+ * ユーザーコントローラー
+ * 
+ * 認証:
+ * - すべてのエンドポイントが認証必須（グローバルガードにより保護）
+ * - req.user.subからユーザーIDを取得
+ */
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -11,48 +18,46 @@ export class UsersController {
   /**
    * ダッシュボード用の概要情報を取得
    * プロフィール詳細よりも軽量な情報を返す
-   * JWTトークンからユーザーIDを取得するため、パラメータは不要
    * 
-   * TODO: 認証実装後は、@Request() reqからuserIdを取得するように変更
-   * 現在はテスト用にuserIdをクエリパラメータで受け取る
+   * 認証: 必須（JWTトークンからユーザーIDを取得）
    */
-  // @UseGuards(JwtAuthGuard) // 認証ガード（今後実装）
   @Get('dashboard')
   async getDashboard(@Request() req): Promise<UserDashboardResponseDto> {
-    // 暫定実装: 認証ガード実装前のテスト用
-    // 認証実装後は以下のコメントアウトを解除し、クエリパラメータの処理を削除
-    // const userId = req.user.sub; // Cognitoのsub（ユーザーID）
-    
-    // テスト用: クエリパラメータからuserIdを取得
-    const userId = (req.query?.userId as string) || req.user?.sub;
-    if (!userId) {
-      throw new Error('userId is required. Please provide userId as query parameter for testing.');
-    }
+    // JWT Guardが検証済みのユーザー情報からユーザーIDを取得
+    // req.userはJWT Strategyのvalidate()メソッドから返された値
+    const userId = req.user.sub;
     
     return this.usersService.getUserDashboard(userId);
   }
 
   /**
    * ログイン済みユーザーが自分のプロフィール情報を取得
-   * JWTトークンからユーザーIDを取得するため、パラメータは不要
    * 
-   * TODO: 認証実装後は、@Request() reqからuserIdを取得するように変更
-   * 現在はテスト用にuserIdをクエリパラメータで受け取る
+   * 認証: 必須（JWTトークンからユーザーIDを取得）
    */
-  // @UseGuards(JwtAuthGuard) // 認証ガード（今後実装）
   @Get('profile')
   async getProfile(@Request() req): Promise<UserDetailResponseDto> {
-    // 暫定実装: 認証ガード実装前のテスト用
-    // 認証実装後は以下のコメントアウトを解除し、クエリパラメータの処理を削除
-    // const userId = req.user.sub; // Cognitoのsub（ユーザーID）
-    
-    // テスト用: クエリパラメータからuserIdを取得
-    const userId = (req.query?.userId as string) || req.user?.sub;
-    if (!userId) {
-      throw new Error('userId is required. Please provide userId as query parameter for testing.');
-    }
+    // JWT Guardが検証済みのユーザー情報からユーザーIDを取得
+    const userId = req.user.sub;
     
     return this.usersService.getUserDetail(userId);
+  }
+
+  /**
+   * プロフィール情報更新
+   * users_mstテーブルから更新
+   * 
+   * 認証: 必須（JWTトークンからユーザーIDを取得）
+   */
+  @Put('profile')
+  async updateProfile(
+    @Request() req,
+    @Body() updateProfileDto: updateProfileRequestDto,
+  ) {
+    // JWT Guardが検証済みのユーザー情報からユーザーIDを取得
+    const userId = req.user.sub;
+
+    return this.usersService.updateProfile(userId, updateProfileDto);
   }
 
 }
