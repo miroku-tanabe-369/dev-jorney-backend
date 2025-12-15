@@ -1,5 +1,7 @@
 //JWTトークンの検証ロジックを提供する
 
+//参考サイト：https://zenn.dev/dove/articles/d45f18f6c50f10
+
 //jwks-rsa を使ってCognitoの公開鍵を動的に取得して、validateメソッドで追加のセキュリティチェックを行う
 
 /* constructor: 環境変数 (COGNITO_USER_POOL_ID, COGNITO_REGION, COGNITO_CLIENT_ID) を取得し、super() に以下の検証ルールを設定: 
@@ -9,12 +11,12 @@
  * validate(payload): 必須のセキュリティチェックとして if (payload.token_use !== 'access') を実装し、Access Token の利用を強制する.
  */
 
-import { Injectable } from "@nestjs/common";
+import { Injectable,Logger } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { passportJwtSecret } from "jwks-rsa";
 import { ConfigService } from "@nestjs/config";
-import { JWTUser, JWTTokenPayload } from "./types/jwt-user.interface";
+import { JwtUser, JwtPayload } from "./types/jwt-user.interface";
 
 /**
  * @nestjs/passport : NestJSでパスポートモジュールを扱うための基底クラス
@@ -22,112 +24,78 @@ import { JWTUser, JWTTokenPayload } from "./types/jwt-user.interface";
  * passport-jwt：JWTストラテジーを作成するために利用する
  */
 
+// 学習で躓いたポイント
+// 【Q1】Startegyをなぜ直接継承しないのか？
+// PassportStrategyは、外部の認証ライブラリの機能を、NestJSのDIシステムとモジュール構造という「枠」に適合させるためのブリッジ役です。
+// これにより、開発者は、外部ライブラリの詳細な初期化ロジックに煩わされることなく、NestJSのクリーンで宣言的な方法で認証戦略を実装できています。
 
-/**
- * JWT認証ストラテジー
- * 
- * 役割:
- * - ID Token（JWT形式）の検証
- * - ユーザー情報の抽出
- */
+//【Q2】PassportStrategy(Strategy, 'jwt')部分の第二引数は何を意味しているのか？
+//第二引数 'jwt' は、AuthGuard('jwt') と JwtStrategy を**連携させるための目印（キー）**であり、このキーによってGuardから認証処理の実体（Strategy）を呼び出しています。
+
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
+    private logger = new Logger(JwtStrategy.name);
+
     constructor(private configService: ConfigService) {
         // ============================================
-        // ステップ1: 環境変数の取得とバリデーション
+        // 環境変数の取得（ConfigServiceを使用）
+        // https://docs.nestjs.com/techniques/configuration#using-the-configservice
         // ============================================
         
-        // COGNITO_USER_POOL_IDを取得
-        // 例: "us-east-1_XXXXXXXXX"
-        const cognitoUserPoolId = configService.get<string>('COGNITO_USER_POOL_ID');
-        
-        // COGNITO_REGIONを取得（デフォルト: ap-northeast-1）
-        const cognitoRegion = configService.get<string>('COGNITO_REGION', 'ap-northeast-1');
-        
         // COGNITO_CLIENT_IDを取得
-        // 例: "1a2b3c4d5e6f7g8h9i0j"
         const cognitoClientId = configService.get<string>('COGNITO_CLIENT_ID');
+        
+        // COGNITO_ISSUERを取得
+        // 例: https://cognito-idp.ap-northeast-1.amazonaws.com/us-east-1_XXXXXXXXX
+        const cognitoIssuer = configService.get<string>('COGNITO_ISSUER');
 
         // 必須環境変数のチェック
-        if (!cognitoUserPoolId) {
-            throw new Error('COGNITO_USER_POOL_ID is not set in environment variables');
-        }
-
         if (!cognitoClientId) {
             throw new Error('COGNITO_CLIENT_ID is not set in environment variables');
         }
 
-        // ============================================
-        // ステップ2: JWKS URIの構築
-        // ============================================
-        
-        // JWKSエンドポイントのURLを構築
+        if (!cognitoIssuer) {
+            throw new Error('COGNITO_ISSUER is not set in environment variables');
+        }
+
+        // JWKS URIを構築
         // 例: https://cognito-idp.ap-northeast-1.amazonaws.com/us-east-1_XXXXXXXXX/.well-known/jwks.json
-        const jwksUri = `https://cognito-idp.${cognitoRegion}.amazonaws.com/${cognitoUserPoolId}/.well-known/jwks.json`;
+        const jwksUri = `${cognitoIssuer}/.well-known/jwks.json`;
 
-        // ============================================
-        // ステップ3: Issuer（発行者）のURLを構築
-        // ============================================
-        
-        // 発行者のURLを構築
-        // 例: https://cognito-idp.ap-northeast-1.amazonaws.com/us-east-1_XXXXXXXXX
-        const issuer = `https://cognito-idp.${cognitoRegion}.amazonaws.com/${cognitoUserPoolId}`;
-
-        // ============================================
-        // ステップ4: Passport Strategyの初期化
-        // ============================================
-        
+        //設定値の具体的な参考文献は以下を参照。
+        //https://github.com/mikenicholson/passport-jwt#configure-strategy
         super({
-            // リクエストからJWTトークンを抽出する方法を指定
-            // Authorization: Bearer <token> 形式からトークンを抽出
+            //ヘッダからBearerトークンを取得
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-
-            // JWKSエンドポイントから公開鍵を取得するプロバイダー
-            secretOrKeyProvider: passportJwtSecret({
-                cache: true,                    // 公開鍵をキャッシュ（パフォーマンス向上）
-                rateLimit: true,                // レート制限を有効化
-                jwksRequestsPerMinute: 5,       // 1分あたりのJWKSリクエスト数制限
-                jwksUri: jwksUri,               // JWKSエンドポイントのURL
-            }),
-
-            // 発行者（Issuer）の検証
-            // JWTトークンのissクレームがこの値と一致する必要がある
-            issuer: issuer,
-
-            // オーディエンス（Audience）の検証
-            // JWTトークンのaudクレームがこの値と一致する必要がある
+            ignoreExpiration: false,
+            //cognitoのクライアントIDを指定（オーディエンス検証）
             audience: cognitoClientId,
-
-            // 使用するアルゴリズム（CognitoはRS256を使用）
+            //jwt発行者。本プロジェクトではCognito（発行者検証）
+            issuer: cognitoIssuer,
             algorithms: ['RS256'],
+            //もし自分がjwtを発行しているなら秘密鍵を指定するが、
+            //cognitoなど外部サービスが発行しているならsecretOrKeyProviderを利用する。
+            secretOrKeyProvider: passportJwtSecret({
+                //公開鍵をキャッシュする。これがfalseだと、毎リクエスト毎に
+                //公開鍵をHTTPリクエストで取得する必要がある。
+                cache: true,
+                //JWKSエンドポイントへのリクエストが一定時間内に過剰に行われるのを防ぐ
+                rateLimit: true,
+                //一分間に公開鍵を取得する回数の上限を設定する
+                jwksRequestsPerMinute: 5,
+                //Cognitoの公開鍵セットがおかれているURLを指定する。このURLからjwks-rsaが鍵をダウンロードする。
+                jwksUri: jwksUri,
+            }),
+            // passReqToCallback: true, //これをtrueにすると、validateの第一引数にRequestを使用できる。
         });
     }
 
-    // ============================================
-    // ステップ5: validateメソッドの実装
-    // ============================================
-    
-    /**
-     * JWTトークン検証後の処理
-     * 
-     * Passportが自動的に以下を検証:
-     * - 署名検証（公開鍵を使用）
-     * - 発行者（iss）の検証
-     * - オーディエンス（aud）の検証
-     * - 有効期限（exp）の検証
-     * 
-     * このメソッドでは追加の検証とユーザー情報の抽出を行う
-     * 
-     * @param payload JWTトークンのペイロード（検証済み）
-     * @returns ユーザー情報（req.userに設定される）
-     */
-    async validate(payload: JWTTokenPayload): Promise<JWTUser> {
-        // subクレーム（Cognito User ID）が存在するか確認
-        if (!payload.sub) {
-            throw new Error('Token payload missing required field: sub');
-        }
-
-        // ユーザー情報を返す（req.userに設定される）
+    //jwt検証後、デコードされたpayloadを渡してくる。
+    //検証後に実行されることに注意。JWTが無効であればそもそも実行されない。
+    //validate自体はPromiseにすることも可能。
+    //戻り値はPassport.jsによって自動的にreq.userに設定される
+    public validate(payload: JwtPayload): JwtUser {
+        // JwtUserオブジェクトを返すことで、コントローラでreq.user.sub, req.user.email, req.user.nameでアクセス可能
         return {
             sub: payload.sub,
             email: payload.email || '',
@@ -135,3 +103,4 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         };
     }
 }
+

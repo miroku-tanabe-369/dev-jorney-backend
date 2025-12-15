@@ -85,12 +85,12 @@ export class QuestsService {
 
       // 2. クエストの進捗情報を更新（存在しない場合は作成）
       await tx.questProgressTran.upsert({
-        where: {
-          userId_questCode: {
-            userId: userid,
-            questCode: questCode,
-          },
+      where: {
+        userId_questCode: {
+          userId: userid,
+          questCode: questCode,
         },
+      },
         update: {
           progress: 100,
           statusCode: 'COMPLETED',
@@ -151,7 +151,7 @@ export class QuestsService {
       // ユーザーマスタを更新
       await tx.usersMst.update({
         where: { userId: userid },
-        data: {
+      data: {
           currentLevel: newLevel,
           totalExp: newTotalExp,
           totalSkillPoint: newTotalSkillPoint,

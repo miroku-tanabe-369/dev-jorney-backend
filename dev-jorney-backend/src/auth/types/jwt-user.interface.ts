@@ -1,7 +1,7 @@
 /**
  * JWTユーザーの型定義
  */
-export interface JWTUser {
+export interface JwtUser {
     sub: string;
     email: string;
     name: string;
@@ -10,7 +10,7 @@ export interface JWTUser {
 /**
  * JWTトークンのペイロード定義
  */
-export interface JWTTokenPayload {
+export interface JwtPayload {
     sub: string;
     email?: string;
     name?: string;

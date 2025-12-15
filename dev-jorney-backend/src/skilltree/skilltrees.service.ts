@@ -11,12 +11,15 @@ export class SkilltreesService {
    * スキルツリーの描画に必要な情報を取得する
    * 
    * @param skilltreeCode 
+   * @param userId 
    * @returns SkilltreeResponseDto
    * @throws Error
    */
-  async getSkilltree(skilltreeCode: string): Promise<SkilltreeResponseDto> {
+  async getSkilltree(skilltreeCode: string, userId: string): Promise<SkilltreeResponseDto> {
     // スキルツリーマスタとリレーション（子テーブル）のデータを取得
     // selectでリレーション名を指定することで、子テーブルのデータを取得できます
+    // マスタデータ（skilltreesMst）を取得し、特定のuserIdの進捗があるものは進捗情報を含める
+    // 進捗がないスキルツリーも含めて取得する（進捗がない場合はデフォルト値を設定）
     const skilltree = await this.prisma.skilltreesMst.findUnique({
       where: {
         skilltreeCode: skilltreeCode,
@@ -26,6 +29,9 @@ export class SkilltreesService {
         skilltreeName: true,
         // リレーション名を指定して子テーブルのデータを取得
         skilltreeProgresses: {
+          where: {
+            userId: userId,
+          },
           select: {
             progress: true,
             statusCode: true,
@@ -44,10 +50,22 @@ export class SkilltreesService {
     const nodeCodes = skilltree?.skilltreeNodes.map((node) => node.nodeCode) || [];
 
     // スキルツリー配下のノードの進捗状況を取得する
+    // nodeCode配列に含まれるすべてのノードを取得し、
+    // その中で特定のuserIdの進捗があるものは進捗情報を含める
+    // 
+    // everyを使う理由:
+    // - 進捗がないノード（リレーション0件）も取得される（everyは空集合をtrueと判定）
+    // - 進捗があるノードで、すべての進捗が条件を満たす場合に取得される
+    // - データベースレベルでフィルタリングされるため、余分なデータを取得しない
     const nodeList = await this.prisma.nodesMst.findMany({
       where: {
         nodeCode: {
           in: nodeCodes
+        },
+        nodeProgresses: {
+          every: {
+            userId: userId,
+          },
         },
       },
       select: {
@@ -59,6 +77,9 @@ export class SkilltreesService {
           }
         },
         nodeProgresses: {
+          where: {
+            userId: userId,
+          },
           select: {
             progress: true,
             statusCode: true,
@@ -68,7 +89,24 @@ export class SkilltreesService {
     });
 
     // nodeListに紐づくクエストの情報を取得する
+    // マスタデータ（questMst）を取得し、特定のuserIdの進捗があるものは進捗情報を含める
+    // 進捗がないクエストも含めて取得する（進捗がない場合はデフォルト値を設定）
+    //
+    // everyを使う理由:
+    // - 進捗がないクエスト（リレーション0件）も取得される（everyは空集合をtrueと判定）
+    // - 進捗があるクエストで、すべての進捗が条件を満たす場合に取得される
+    // - データベースレベルでフィルタリングされるため、余分なデータを取得しない
     const questList = await this.prisma.questMst.findMany({
+      where: {
+        nodeCode: {
+          in: nodeCodes
+        },
+        questProgresses: {
+          every: {
+            userId: userId,
+          },
+        },
+      },
       select: {
         questCode: true,
         questOrder: true,
@@ -78,15 +116,13 @@ export class SkilltreesService {
         skillPoint: true,
         difficulty: true,
         questProgresses: {
+          where: {
+            userId: userId,
+          },
           select: {
             progress: true,
             statusCode: true,
           }
-        }
-      },
-      where: {
-        nodeCode: {
-          in: nodeCodes
         }
       }
     })

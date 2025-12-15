@@ -10,7 +10,7 @@ import { NodesModule } from './nodes/nodes.module';
 import { QuestsModule } from './quests/quests.module';
 import { ChecklistsModule } from './checklists/checklists.module';
 import { AuthModule } from './auth/auth.module';
-import { AuthorizerGuard } from './auth/jwt-auth.guard';
+import { AuthorizerGuard } from './auth/jwt.guard';
 
 /**
  * アプリケーションモジュール

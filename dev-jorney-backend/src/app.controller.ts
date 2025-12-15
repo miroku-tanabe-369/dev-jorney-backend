@@ -1,8 +1,10 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { PrismaService } from './prisma/prisma.service';
 import { Public } from './auth/public.decorator';
+import { JwtGuard } from './auth/jwt.guard';
 
+@UseGuards(JwtGuard) //JWT認証をこのコントローラー全体に適応
 @Controller()
 export class AppController {
   constructor(
