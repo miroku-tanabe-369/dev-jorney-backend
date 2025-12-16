@@ -16,7 +16,7 @@ export class SkilltreesController {
   /**
    * スキルツリー詳細情報を取得
    */
-  @Get('skilltree/:skilltreeCode')
+  @Get(':skilltreeCode')
   async getSkilltree(
     @Param('skilltreeCode') skilltreeCode: string,
     @Request() req,
