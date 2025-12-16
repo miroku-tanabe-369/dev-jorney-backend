@@ -10,7 +10,7 @@ import { Public } from '../auth/public.decorator';
  * - クエスト詳細取得: 認証不要（@Public()）
  * - クエスト進捗更新: 認証必須（グローバルガードにより保護）
  */
-@Controller('quests')
+@Controller('quest-detail')
 export class QuestsController {
   constructor(private readonly questsService: QuestsService) {}
 
@@ -20,7 +20,7 @@ export class QuestsController {
    * 認証: 不要（@Public()デコレータにより認証をスキップ）
    */
   @Public()
-  @Get('quest-detail/:questCode')
+  @Get(':questCode')
   async getQuestDetail(
     @Param('questCode') questCode: string
   ): Promise<QuestDetailResponseDto> {
