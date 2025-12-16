@@ -15,6 +15,7 @@ export class UserInfoDto {
  * quest_mst, quest_progress_tranテーブルから取得
  */
 export class progressQuestInfoDto {
+    questCode: string;
     questName: string;
     questDetail: string;
     progress: number;

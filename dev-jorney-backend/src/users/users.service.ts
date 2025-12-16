@@ -88,6 +88,7 @@ export class UsersService {
         // shcema.prismaで定義している、questリレーションから(QuestMstテーブル)questCodeを外部キーとして取得する。
         quest: {
           select: {
+            questCode: true,
             questName: true,
             questDetail: true,
             recommendedTime: true,
@@ -100,6 +101,7 @@ export class UsersService {
     // クエスト情報をDTO形式に変換
     const currentQuest = currentQuestProgress
       ? {
+          questCode: currentQuestProgress.quest.questCode,
           questName: currentQuestProgress.quest.questName,
           questDetail: currentQuestProgress.quest.questDetail,
           progress: currentQuestProgress.progress,
