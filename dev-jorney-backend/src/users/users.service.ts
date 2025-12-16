@@ -121,6 +121,7 @@ export class UsersService {
       include: {
         quest: {
           select: {
+            questCode: true,
             questName: true,
             skillPoint: true,
           },
@@ -130,6 +131,7 @@ export class UsersService {
 
     // DTO形式に変換
     const latestCompletedQuests = latestCompletedQuestsData.map((questProgress) => ({
+      questCode: questProgress.quest.questCode,
       questName: questProgress.quest.questName,
       skillPoint: questProgress.quest.skillPoint,
       completedAt: questProgress.updatedAt, // 完了日時はquest_progress_tranのupdatedAtを使用

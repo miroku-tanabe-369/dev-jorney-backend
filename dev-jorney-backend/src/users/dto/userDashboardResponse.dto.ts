@@ -27,6 +27,7 @@ export class progressQuestInfoDto {
  * quest_progress_tranテーブルから取得
  */
 export class LatestCompletedQuestInfoDto {
+    questCode: string;
     questName: string;
     skillPoint: number;
     completedAt: Date;
