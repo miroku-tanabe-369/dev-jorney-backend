@@ -5,6 +5,7 @@
 export class UserInfoDto {
   name: string;
   currentLevel: number;
+  progress: number; //現在のレベルの進捗度（0~100）
   requiredExp: number; // 次のレベルに必要な経験値
   totalSkillPoint: number;
   completedQuestCount: number;

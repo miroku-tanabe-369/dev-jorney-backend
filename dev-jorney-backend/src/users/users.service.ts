@@ -73,6 +73,9 @@ export class UsersService {
       ? Math.max(0, nextLevelInfo.requiredExp - remainingExp)
       : 0;
 
+    // 現在のレベルの進捗度を算出する
+    const currentLevelProgress = Math.round( remainingExp / levelInfo[userInfo.currentLevel + 1].requiredExp * 100);
+
 
     // 進行中のクエストの取得
     // statusCodeが'PROGRESS'で、updatedAtが最古のレコードを取得
@@ -143,6 +146,7 @@ export class UsersService {
       userInfo: {
         name: userInfo.name,
         currentLevel: userInfo.currentLevel,
+        progress: currentLevelProgress,
         requiredExp: requiredExp,
         totalSkillPoint: userInfo.totalSkillPoint,
         completedQuestCount: userInfo.completedQuestCount,
