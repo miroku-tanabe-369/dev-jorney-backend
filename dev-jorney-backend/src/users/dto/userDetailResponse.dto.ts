@@ -17,6 +17,7 @@ export class UserDetailInfoDto {
  * users_skills_tranテーブルから取得
  */
 export class UserSkillInfoDto {
+  skillCode: string;
   skillName: string;
   level: string;
 }

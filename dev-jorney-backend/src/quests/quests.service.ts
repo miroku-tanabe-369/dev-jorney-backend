@@ -16,7 +16,8 @@ export class QuestsService {
   async getQuestDetail(questCode: string): Promise<QuestDetailResponseDto> {
     const quest = await this.prisma.questMst.findUnique({
       select: {
-        questCode: true,  
+        questCode: true,
+        nodeCode: true,
         questName: true,
         questDetail: true,
         exp: true,
@@ -44,6 +45,7 @@ export class QuestsService {
 
     return {
       questCode: quest.questCode,
+      nodeCode: quest.nodeCode,
       questName: quest.questName,
       questDetail: quest.questDetail,
       exp: quest.exp,

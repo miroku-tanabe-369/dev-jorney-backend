@@ -190,13 +190,14 @@ export class UsersService {
         level: true,
         skill: {
           select: {
+            skillCode: true,
             skillName: true,
           },
         },
       },
     })) as unknown as Array<{
       level: string;
-      skill: { skillName: string };
+      skill: { skillCode: string; skillName: string };
     }>;
 
     return {
@@ -212,6 +213,7 @@ export class UsersService {
       userSkills:
         userSkills.length > 0
           ? userSkills.map((us) => ({
+              skillCode: us.skill.skillCode,
               skillName: us.skill.skillName,
               level: us.level,
             }))
