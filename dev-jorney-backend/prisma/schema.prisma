@@ -19,8 +19,8 @@ model UsersMst {
   name                String    @db.VarChar(255)
   email               String    @unique @db.VarChar(255)
   profile             String?   @db.VarChar(500)
-  //TODO: Base64形式に修正
-  icon                String?   @map("icon") @db.VarChar(255)
+  // Base64形式の画像データを保存（長文を扱うためText型を使用）
+  icon                String?   @map("icon") @db.Text
   currentLevel        Int       @map("current_level")
   totalExp            Int       @map("total_exp")
   totalSkillPoint     Int       @map("total_skill_point")
