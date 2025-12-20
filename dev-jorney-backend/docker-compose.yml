@@ -31,11 +31,11 @@ services:
     #ボリュームマウント後に再生成/デプロイ/起動を行う
     command: sh -c "npm run start:dev"
     ports:
-      - "3000:3000"
+      - "3001:3000"
     env_file:
       - .env
     environment:
-      NODE_ENV: ${NODE_ENV}エラーエラー
+      NODE_ENV: ${NODE_ENV:-development}
       DATABASE_HOST: ${DATABASE_HOST}
       DATABASE_PORT: ${DATABASE_PORT}
       DATABASE_USERNAME: ${DATABASE_USERNAME}
