@@ -4,7 +4,34 @@
 //マイグレーション設定を行うためファイル
 
 import "dotenv/config";
-import { defineConfig, env } from "prisma/config";
+import { defineConfig } from "prisma/config";
+
+// 個別の環境変数を組み合わせて DATABASE_URL を生成する関数
+const getDatabaseUrl = () => {
+  // すでに DATABASE_URL がある場合はそれを使う（ローカル環境など）
+  if (process.env.DATABASE_URL) {
+    return process.env.DATABASE_URL;
+  }
+
+  // AWS環境（ECS）では個別の変数から組み立てる
+  const {
+    DATABASE_USERNAME,
+    DATABASE_PASSWORD,
+    DATABASE_HOST,
+    DATABASE_PORT,
+    DATABASE_NAME,
+  } = process.env;
+
+  // 必要な変数が揃っているかチェック
+  if (DATABASE_USERNAME && DATABASE_PASSWORD && DATABASE_HOST && DATABASE_PORT && DATABASE_NAME) {
+    return `postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}`;
+  }
+
+  // 環境変数が不足している場合はエラーを投げる
+  throw new Error(
+    'DATABASE_URL or individual database environment variables (DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_HOST, DATABASE_PORT, DATABASE_NAME) must be set'
+  );
+};
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
@@ -12,6 +39,7 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: env("DATABASE_URL"), //マイグレーション用のURL
+    // 組み立てたURLをセットする
+    url: getDatabaseUrl(),
   },
 });

@@ -27,12 +27,30 @@ ENV NODE_ENV=production
 
 # 本番に必要な依存関係のみをインストール
 COPY package*.json ./
+
+# Prisma 7 は自動的に prisma.config.ts を読み込んで実行します
+# このファイルはビルド環境で作成したものをコピーしている。
+COPY prisma.config.ts ./prisma.config.ts
+
 # --omit=devはdevDependenciesをインストールしないオプション
 RUN npm ci --omit=dev && npm cache clean --force
+
+# 【重要】Prismaスキーマと生成されたClientをコピー
+# migrate deployを実行するためにschema.prismaが必要
+COPY --from=builder /app/prisma ./prisma
+# Prisma 7で生成されたクライアントコードとパッケージをコピー
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
 # ビルド成果物をコピー
 # --fromを付けることでコンテナ内からビルド環境の成果物をコピーすることができる。
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/prisma.config.ts ./
+
+# 追加の処理の記載
+# スクリプトをコピーして実行権限を与える
+COPY entrypoint.sh ./
+RUN chmod +x entrypoint.sh
 
 # ポート3000を公開
 EXPOSE 3000
@@ -61,7 +79,13 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 # ECSの自動復旧が機能しない可能性がある
 
 # NestJSアプリケーションを起動
-CMD ["node", "dist/main"]
+# CMD ["node", "dist/main"]
+
+# 【重要】マイグレーション-> シードデータ投入-> アプリを起動
+# CMD npx prisma migrate deploy && npx prisma db seed && node dist/main
+
+# コンテナ起動時にこのスクリプトを一番最初に実行させる
+ENTRYPOINT ["./entrypoint.sh"]
 
 # nodeコマンド　引数にdist/mainを渡すことで、distディレクトリにあるmain.jsを実行する。
 
