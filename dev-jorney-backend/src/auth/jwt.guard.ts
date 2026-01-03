@@ -45,6 +45,21 @@ export class JwtGuard extends AuthGuard('jwt') {
         if (authorization) {
             this.logger.log(`Authorization header prefix: ${authorization.substring(0, 30)}...`);
             this.logger.log(`Is Bearer token: ${authorization.startsWith('Bearer ')}`);
+            
+            // トークンをデコードしてaudクレームを確認（デバッグ用）
+            try {
+                const token = authorization.replace('Bearer ', '');
+                const parts = token.split('.');
+                if (parts.length === 3) {
+                    const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString('utf-8'));
+                    this.logger.log(`Token aud (audience): ${payload.aud || 'not found'}`);
+                    this.logger.log(`Token iss (issuer): ${payload.iss || 'not found'}`);
+                    this.logger.log(`Token sub: ${payload.sub || 'not found'}`);
+                    this.logger.log(`Token exp: ${payload.exp ? new Date(payload.exp * 1000).toISOString() : 'not found'}`);
+                }
+            } catch (e) {
+                this.logger.warn('Failed to decode token for debugging:', e);
+            }
         } else {
             this.logger.warn('❌ Authorization header not found in request');
         }
