@@ -88,6 +88,13 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
             }),
             // passReqToCallback: true, //これをtrueにすると、validateの第一引数にRequestを使用できる。
         });
+
+        // ログ出力（環境変数の値を確認）- super()の後に実行
+        this.logger.log('=== JWT Strategy Configuration ===');
+        this.logger.log(`COGNITO_CLIENT_ID: ${cognitoClientId ? cognitoClientId.substring(0, 10) + '...' : 'NOT SET'}`);
+        this.logger.log(`COGNITO_ISSUER: ${cognitoIssuer || 'NOT SET'}`);
+        this.logger.log(`JWKS URI: ${jwksUri}`);
+        this.logger.log('===================================');
     }
 
     //jwt検証後、デコードされたpayloadを渡してくる。
@@ -95,6 +102,15 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     //validate自体はPromiseにすることも可能。
     //戻り値はPassport.jsによって自動的にreq.userに設定される
     public validate(payload: JwtPayload): JwtUser {
+        this.logger.log('=== JWT Token Validated Successfully ===');
+        this.logger.log(`Token sub: ${payload.sub}`);
+        this.logger.log(`Token email: ${payload.email || 'not provided'}`);
+        this.logger.log(`Token name: ${payload.name || 'not provided'}`);
+        this.logger.log(`Token use: ${(payload as any).token_use || 'not provided'}`);
+        this.logger.log(`Token audience: ${(payload as any).aud || 'not provided'}`);
+        this.logger.log(`Token issuer: ${(payload as any).iss || 'not provided'}`);
+        this.logger.log('==========================================');
+        
         // JwtUserオブジェクトを返すことで、コントローラでreq.user.sub, req.user.email, req.user.nameでアクセス可能
         return {
             sub: payload.sub,
