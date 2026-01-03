@@ -119,6 +119,9 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
         this.logger.log(`Token client_id: ${clientId || 'not provided'}`);
         this.logger.log(`Token audience: ${tokenPayload.aud || 'not provided (optional)'}`);
         this.logger.log(`Token issuer: ${tokenPayload.iss || 'not provided'}`);
+        this.logger.log(`Token username: ${tokenPayload.username || 'not provided'}`);
+        this.logger.log(`Token scope: ${tokenPayload.scope || 'not provided'}`);
+        this.logger.log(`All token claims: ${JSON.stringify(Object.keys(tokenPayload))}`);
         
         // client_idクレームの検証
         if (clientId && expectedClientId && clientId !== expectedClientId) {
