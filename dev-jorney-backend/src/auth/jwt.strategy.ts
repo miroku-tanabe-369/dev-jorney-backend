@@ -68,8 +68,10 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
             //ヘッダからBearerトークンを取得
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
-            //cognitoのクライアントIDを指定（オーディエンス検証）
-            audience: cognitoClientId,
+            // 注意: CognitoのAccess Tokenには`aud`クレームが含まれないため、
+            // audience検証を無効化する
+            // セキュリティ上、issuer検証と署名検証で十分な保護が提供される
+            // audience: cognitoClientId, // コメントアウト: Access Tokenには`aud`が含まれない
             //jwt発行者。本プロジェクトではCognito（発行者検証）
             issuer: cognitoIssuer,
             algorithms: ['RS256'],
@@ -102,13 +104,34 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     //validate自体はPromiseにすることも可能。
     //戻り値はPassport.jsによって自動的にreq.userに設定される
     public validate(payload: JwtPayload): JwtUser {
+        // Access Tokenのclient_idクレームを検証
+        // 注意: Access Tokenには`aud`クレームが含まれない場合があるが、
+        // `client_id`クレームは常に存在し、IDトークンの`aud`と同じ値を持つ
+        const tokenPayload = payload as any;
+        const clientId = tokenPayload.client_id;
+        const expectedClientId = this.configService.get<string>('COGNITO_CLIENT_ID');
+        
         this.logger.log('=== JWT Token Validated Successfully ===');
         this.logger.log(`Token sub: ${payload.sub}`);
         this.logger.log(`Token email: ${payload.email || 'not provided'}`);
         this.logger.log(`Token name: ${payload.name || 'not provided'}`);
-        this.logger.log(`Token use: ${(payload as any).token_use || 'not provided'}`);
-        this.logger.log(`Token audience: ${(payload as any).aud || 'not provided'}`);
-        this.logger.log(`Token issuer: ${(payload as any).iss || 'not provided'}`);
+        this.logger.log(`Token use: ${tokenPayload.token_use || 'not provided'}`);
+        this.logger.log(`Token client_id: ${clientId || 'not provided'}`);
+        this.logger.log(`Token audience: ${tokenPayload.aud || 'not provided (optional)'}`);
+        this.logger.log(`Token issuer: ${tokenPayload.iss || 'not provided'}`);
+        
+        // client_idクレームの検証
+        if (clientId && expectedClientId && clientId !== expectedClientId) {
+            this.logger.error(`❌ Client ID mismatch: expected ${expectedClientId}, got ${clientId}`);
+            throw new Error(`Invalid client_id: expected ${expectedClientId}, got ${clientId}`);
+        }
+        
+        if (!clientId) {
+            this.logger.warn('⚠️ client_id claim not found in token');
+        } else {
+            this.logger.log(`✅ Client ID verified: ${clientId}`);
+        }
+        
         this.logger.log('==========================================');
         
         // JwtUserオブジェクトを返すことで、コントローラでreq.user.sub, req.user.email, req.user.nameでアクセス可能
