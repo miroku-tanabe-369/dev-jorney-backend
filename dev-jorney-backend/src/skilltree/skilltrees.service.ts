@@ -53,19 +53,12 @@ export class SkilltreesService {
     // nodeCode配列に含まれるすべてのノードを取得し、
     // その中で特定のuserIdの進捗があるものは進捗情報を含める
     // 
-    // everyを使う理由:
-    // - 進捗がないノード（リレーション0件）も取得される（everyは空集合をtrueと判定）
-    // - 進捗があるノードで、すべての進捗が条件を満たす場合に取得される
-    // - データベースレベルでフィルタリングされるため、余分なデータを取得しない
+    // 注意: nodeProgressesの条件を削除することで、すべてのノードを取得する
+    // 進捗情報はselect内のwhereでフィルタリングされるため、他のユーザーの進捗は含まれない
     const nodeList = await this.prisma.nodesMst.findMany({
       where: {
         nodeCode: {
           in: nodeCodes
-        },
-        nodeProgresses: {
-          every: {
-            userId: userId,
-          },
         },
       },
       select: {
@@ -92,19 +85,12 @@ export class SkilltreesService {
     // マスタデータ（questMst）を取得し、特定のuserIdの進捗があるものは進捗情報を含める
     // 進捗がないクエストも含めて取得する（進捗がない場合はデフォルト値を設定）
     //
-    // everyを使う理由:
-    // - 進捗がないクエスト（リレーション0件）も取得される（everyは空集合をtrueと判定）
-    // - 進捗があるクエストで、すべての進捗が条件を満たす場合に取得される
-    // - データベースレベルでフィルタリングされるため、余分なデータを取得しない
+    // 注意: questProgressesの条件を削除することで、すべてのクエストを取得する
+    // 進捗情報はselect内のwhereでフィルタリングされるため、他のユーザーの進捗は含まれない
     const questList = await this.prisma.questMst.findMany({
       where: {
         nodeCode: {
           in: nodeCodes
-        },
-        questProgresses: {
-          every: {
-            userId: userId,
-          },
         },
       },
       select: {
