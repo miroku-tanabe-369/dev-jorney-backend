@@ -74,7 +74,10 @@ export class UsersService {
       : 0;
 
     // 現在のレベルの進捗度を算出する
-    const currentLevelProgress = Math.round( remainingExp / levelInfo[userInfo.currentLevel + 1].requiredExp * 100);
+    // nextLevelInfoが存在する場合のみ進捗度を計算（最大レベルの場合は0%）
+    const currentLevelProgress = nextLevelInfo && nextLevelInfo.requiredExp > 0
+      ? Math.round((remainingExp / nextLevelInfo.requiredExp) * 100)
+      : 0;
 
 
     // 進行中のクエストの取得

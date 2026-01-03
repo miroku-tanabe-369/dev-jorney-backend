@@ -15,7 +15,8 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 // シードデータファイルのパス
-const SEED_DATA_FILE = path.join(__dirname, 'seed-data.json');
+// コンパイル後は dist/prisma/seed.js になるため、実行時の作業ディレクトリ（/app）から相対パスで指定
+const SEED_DATA_FILE = path.join(process.cwd(), 'prisma', 'seed-data.json');
 
 interface SeedData {
   users?: any[];

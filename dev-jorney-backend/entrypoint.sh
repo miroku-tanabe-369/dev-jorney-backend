@@ -11,7 +11,8 @@ npx prisma migrate deploy --config ./prisma.config.ts
 
 echo "Starting seed data insertion..."
 # シードデータを投入（upsertなので既存データは更新される）
-npx prisma db seed --config ./prisma.config.ts || echo "Seed data insertion completed or skipped"
+# コンパイル済みのJavaScriptファイルを実行（ts-nodeのエラーを回避）
+node dist/prisma/seed.js || echo "Seed data insertion completed or skipped"
 
 echo "Starting NestJS application..."
 exec node dist/src/main.js
