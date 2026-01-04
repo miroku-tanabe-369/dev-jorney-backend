@@ -1,14 +1,12 @@
 import { Controller, Get, Param, Put, Request } from '@nestjs/common';
 import { QuestsService } from './quests.service';
 import { QuestDetailResponseDto } from './dto/questDetailResponse.dto';
-import { Public } from '../auth/public.decorator';
 
 /**
  * クエストコントローラー
  * 
  * 認証:
- * - クエスト詳細取得: 認証不要（@Public()）
- * - クエスト進捗更新: 認証必須（グローバルガードにより保護）
+ * - すべてのエンドポイント: 認証必須（グローバルガードにより保護）
  */
 @Controller('quest-detail')
 export class QuestsController {
@@ -17,18 +15,21 @@ export class QuestsController {
   /**
    * クエスト詳細情報を取得
    * 
-   * 認証: 不要（@Public()デコレータにより認証をスキップ）
+   * 認証: 必須（JWTトークンからユーザーIDを取得）
    */
-  @Public()
   @Get(':questCode')
   async getQuestDetail(
-    @Param('questCode') questCode: string
+    @Param('questCode') questCode: string,
+    @Request() req,
   ): Promise<QuestDetailResponseDto> {
     if (!questCode) {
       throw new Error('questCode is required');
     }
 
-    return this.questsService.getQuestDetail(questCode);
+    // JWT Guardが検証済みのユーザー情報からユーザーIDを取得
+    const userId = req.user.sub;
+
+    return this.questsService.getQuestDetail(questCode, userId);
   }
 
   /**

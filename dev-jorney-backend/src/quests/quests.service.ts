@@ -10,10 +10,11 @@ export class QuestsService {
    * クエスト詳細情報を取得する
    * 
    * @param questCode 
+   * @param userId ユーザーID（認証必須）
    * @returns QuestDetailResponseDto
    * @throws Error
    */
-  async getQuestDetail(questCode: string): Promise<QuestDetailResponseDto> {
+  async getQuestDetail(questCode: string, userId: string): Promise<QuestDetailResponseDto> {
     const quest = await this.prisma.questMst.findUnique({
       select: {
         questCode: true,
@@ -28,6 +29,9 @@ export class QuestsService {
         achievementConditions: true,
         checklistItems: true,
         questProgresses: {
+          where: {
+            userId: userId,
+          },
           select: {
             progress: true,
             statusCode: true,
