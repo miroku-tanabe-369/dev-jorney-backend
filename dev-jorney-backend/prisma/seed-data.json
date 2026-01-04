@@ -646,12 +646,6 @@
   ],
   "questProgresses": [
     {
-      "userId": "17142ac8-a071-7011-b7c8-ed2d94de92e3",
-      "questCode": "ND_F001_Q01",
-      "progress": 30,
-      "statusCode": "PROGRESS"
-    },
-    {
       "userId": "c7147a48-6061-70f5-88b8-b32fadaa3463",
       "questCode": "ND_F001_Q01",
       "progress": 100,
@@ -902,21 +896,9 @@
       "questCode": "ND_P001_Q02",
       "progress": 100,
       "statusCode": "COMPLETED"
-    },
-    {
-      "userId": "5744aab8-e0b1-700f-08a3-2a18999ea7bd",
-      "questCode": "ND_P001_Q03",
-      "progress": 70,
-      "statusCode": "PROGRESS"
     }
   ],
   "nodeProgresses": [
-    {
-      "userId": "17142ac8-a071-7011-b7c8-ed2d94de92e3",
-      "nodeCode": "ND_F001",
-      "progress": 10,
-      "statusCode": "PROGRESS"
-    },
     {
       "userId": "c7147a48-6061-70f5-88b8-b32fadaa3463",
       "nodeCode": "ND_F001",
@@ -932,7 +914,7 @@
     {
       "userId": "c7147a48-6061-70f5-88b8-b32fadaa3463",
       "nodeCode": "ND_V001",
-      "progress": 60,
+      "progress": 100,
       "statusCode": "PROGRESS"
     },
     {
@@ -988,12 +970,6 @@
       "nodeCode": "ND_O001",
       "progress": 100,
       "statusCode": "COMPLETED"
-    },
-    {
-      "userId": "5744aab8-e0b1-700f-08a3-2a18999ea7bd",
-      "nodeCode": "ND_P001",
-      "progress": 70,
-      "statusCode": "PROGRESS"
     }
   ],
   "skilltreeProgresses": [
