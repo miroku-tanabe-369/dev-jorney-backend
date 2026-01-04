@@ -90,13 +90,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
             }),
             // passReqToCallback: true, //これをtrueにすると、validateの第一引数にRequestを使用できる。
         });
-
-        // ログ出力（環境変数の値を確認）- super()の後に実行
-        this.logger.log('=== JWT Strategy Configuration ===');
-        this.logger.log(`COGNITO_CLIENT_ID: ${cognitoClientId ? cognitoClientId.substring(0, 10) + '...' : 'NOT SET'}`);
-        this.logger.log(`COGNITO_ISSUER: ${cognitoIssuer || 'NOT SET'}`);
-        this.logger.log(`JWKS URI: ${jwksUri}`);
-        this.logger.log('===================================');
     }
 
     //jwt検証後、デコードされたpayloadを渡してくる。
@@ -111,31 +104,10 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
         const clientId = tokenPayload.client_id;
         const expectedClientId = this.configService.get<string>('COGNITO_CLIENT_ID');
         
-        this.logger.log('=== JWT Token Validated Successfully ===');
-        this.logger.log(`Token sub: ${payload.sub}`);
-        this.logger.log(`Token email: ${payload.email || 'not provided'}`);
-        this.logger.log(`Token name: ${payload.name || 'not provided'}`);
-        this.logger.log(`Token use: ${tokenPayload.token_use || 'not provided'}`);
-        this.logger.log(`Token client_id: ${clientId || 'not provided'}`);
-        this.logger.log(`Token audience: ${tokenPayload.aud || 'not provided (optional)'}`);
-        this.logger.log(`Token issuer: ${tokenPayload.iss || 'not provided'}`);
-        this.logger.log(`Token username: ${tokenPayload.username || 'not provided'}`);
-        this.logger.log(`Token scope: ${tokenPayload.scope || 'not provided'}`);
-        this.logger.log(`All token claims: ${JSON.stringify(Object.keys(tokenPayload))}`);
-        
         // client_idクレームの検証
         if (clientId && expectedClientId && clientId !== expectedClientId) {
-            this.logger.error(`❌ Client ID mismatch: expected ${expectedClientId}, got ${clientId}`);
             throw new Error(`Invalid client_id: expected ${expectedClientId}, got ${clientId}`);
         }
-        
-        if (!clientId) {
-            this.logger.warn('⚠️ client_id claim not found in token');
-        } else {
-            this.logger.log(`✅ Client ID verified: ${clientId}`);
-        }
-        
-        this.logger.log('==========================================');
         
         // JwtUserオブジェクトを返すことで、コントローラでreq.user.sub, req.user.email, req.user.nameでアクセス可能
         return {
