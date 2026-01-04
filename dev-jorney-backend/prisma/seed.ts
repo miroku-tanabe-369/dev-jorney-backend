@@ -54,15 +54,29 @@ async function main() {
   if (seedData.users && seedData.users.length > 0) {
     console.log(`📝 ${seedData.users.length}件のユーザーを登録します...`);
     for (const userData of seedData.users) {
-      await prisma.usersMst.upsert({
+      const existing = await prisma.usersMst.findUnique({
         where: { email: userData.email },
-        update: userData,
-        create: {
-          ...userData,
-          createdBy: userData.createdBy || defaultUserId,
-          updatedBy: userData.updatedBy || defaultUserId,
-        },
       });
+      
+      if (existing) {
+        // createdByとcreatedAtは更新しない
+        const { createdBy, createdAt, ...updateData } = userData;
+        await prisma.usersMst.update({
+          where: { email: userData.email },
+          data: {
+            ...updateData,
+            updatedBy: userData.updatedBy || defaultUserId,
+          },
+        });
+      } else {
+        await prisma.usersMst.create({
+          data: {
+            ...userData,
+            createdBy: userData.createdBy || defaultUserId,
+            updatedBy: userData.updatedBy || defaultUserId,
+          },
+        });
+      }
     }
     console.log('✅ ユーザーマスタの登録が完了しました');
   }
@@ -71,15 +85,29 @@ async function main() {
   if (seedData.levels && seedData.levels.length > 0) {
     console.log(`📝 ${seedData.levels.length}件のレベルマスタを登録します...`);
     for (const levelData of seedData.levels) {
-      await prisma.levelMst.upsert({
+      const existing = await prisma.levelMst.findUnique({
         where: { level: levelData.level },
-        update: levelData,
-        create: {
-          ...levelData,
-          createdBy: levelData.createdBy || defaultUserId,
-          updatedBy: levelData.updatedBy || defaultUserId,
-        },
       });
+      
+      if (existing) {
+        // createdByとcreatedAtは更新しない
+        const { createdBy, createdAt, ...updateData } = levelData;
+        await prisma.levelMst.update({
+          where: { level: levelData.level },
+          data: {
+            ...updateData,
+            updatedBy: levelData.updatedBy || defaultUserId,
+          },
+        });
+      } else {
+        await prisma.levelMst.create({
+          data: {
+            ...levelData,
+            createdBy: levelData.createdBy || defaultUserId,
+            updatedBy: levelData.updatedBy || defaultUserId,
+          },
+        });
+      }
     }
     console.log('✅ レベルマスタの登録が完了しました');
   }
@@ -88,15 +116,29 @@ async function main() {
   if (seedData.skills && seedData.skills.length > 0) {
     console.log(`📝 ${seedData.skills.length}件のスキルマスタを登録します...`);
     for (const skillData of seedData.skills) {
-      await prisma.skillsMst.upsert({
+      const existing = await prisma.skillsMst.findUnique({
         where: { skillCode: skillData.skillCode },
-        update: skillData,
-        create: {
-          ...skillData,
-          createdBy: skillData.createdBy || defaultUserId,
-          updatedBy: skillData.updatedBy || defaultUserId,
-        },
       });
+      
+      if (existing) {
+        // createdByとcreatedAtは更新しない
+        const { createdBy, createdAt, ...updateData } = skillData;
+        await prisma.skillsMst.update({
+          where: { skillCode: skillData.skillCode },
+          data: {
+            ...updateData,
+            updatedBy: skillData.updatedBy || defaultUserId,
+          },
+        });
+      } else {
+        await prisma.skillsMst.create({
+          data: {
+            ...skillData,
+            createdBy: skillData.createdBy || defaultUserId,
+            updatedBy: skillData.updatedBy || defaultUserId,
+          },
+        });
+      }
     }
     console.log('✅ スキルマスタの登録が完了しました');
   }
@@ -107,15 +149,29 @@ async function main() {
       `📝 ${seedData.skilltrees.length}件のスキルツリーマスタを登録します...`,
     );
     for (const skilltreeData of seedData.skilltrees) {
-      await prisma.skilltreesMst.upsert({
+      const existing = await prisma.skilltreesMst.findUnique({
         where: { skilltreeCode: skilltreeData.skilltreeCode },
-        update: skilltreeData,
-        create: {
-          ...skilltreeData,
-          createdBy: skilltreeData.createdBy || defaultUserId,
-          updatedBy: skilltreeData.updatedBy || defaultUserId,
-        },
       });
+      
+      if (existing) {
+        // createdByとcreatedAtは更新しない
+        const { createdBy, createdAt, ...updateData } = skilltreeData;
+        await prisma.skilltreesMst.update({
+          where: { skilltreeCode: skilltreeData.skilltreeCode },
+          data: {
+            ...updateData,
+            updatedBy: skilltreeData.updatedBy || defaultUserId,
+          },
+        });
+      } else {
+        await prisma.skilltreesMst.create({
+          data: {
+            ...skilltreeData,
+            createdBy: skilltreeData.createdBy || defaultUserId,
+            updatedBy: skilltreeData.updatedBy || defaultUserId,
+          },
+        });
+      }
     }
     console.log('✅ スキルツリーマスタの登録が完了しました');
   }
@@ -124,15 +180,33 @@ async function main() {
   if (seedData.nodes && seedData.nodes.length > 0) {
     console.log(`📝 ${seedData.nodes.length}件のノードマスタを登録します...`);
     for (const nodeData of seedData.nodes) {
-      await prisma.nodesMst.upsert({
+      // 既存データを確認
+      const existing = await prisma.nodesMst.findUnique({
         where: { nodeCode: nodeData.nodeCode },
-        update: nodeData,
-        create: {
-          ...nodeData,
-          createdBy: nodeData.createdBy || defaultUserId,
-          updatedBy: nodeData.updatedBy || defaultUserId,
-        },
       });
+      
+      if (existing) {
+        console.log(`🔄 Updating node: ${nodeData.nodeCode}`);
+        // createdByとcreatedAtは更新しない
+        const { createdBy, createdAt, ...updateData } = nodeData;
+        await prisma.nodesMst.update({
+          where: { nodeCode: nodeData.nodeCode },
+          data: {
+            ...updateData,
+            updatedBy: nodeData.updatedBy || defaultUserId,
+            // updatedAtは自動的に更新される
+          },
+        });
+      } else {
+        console.log(`➕ Creating node: ${nodeData.nodeCode}`);
+        await prisma.nodesMst.create({
+          data: {
+            ...nodeData,
+            createdBy: nodeData.createdBy || defaultUserId,
+            updatedBy: nodeData.updatedBy || defaultUserId,
+          },
+        });
+      }
     }
     console.log('✅ ノードマスタの登録が完了しました');
   }
@@ -141,15 +215,33 @@ async function main() {
   if (seedData.quests && seedData.quests.length > 0) {
     console.log(`📝 ${seedData.quests.length}件のクエストマスタを登録します...`);
     for (const questData of seedData.quests) {
-      await prisma.questMst.upsert({
+      // 既存データを確認
+      const existing = await prisma.questMst.findUnique({
         where: { questCode: questData.questCode },
-        update: questData,
-        create: {
-          ...questData,
-          createdBy: questData.createdBy || defaultUserId,
-          updatedBy: questData.updatedBy || defaultUserId,
-        },
       });
+      
+      if (existing) {
+        console.log(`🔄 Updating quest: ${questData.questCode}`);
+        // createdByとcreatedAtは更新しない
+        const { createdBy, createdAt, ...updateData } = questData;
+        await prisma.questMst.update({
+          where: { questCode: questData.questCode },
+          data: {
+            ...updateData,
+            updatedBy: questData.updatedBy || defaultUserId,
+            // updatedAtは自動的に更新される
+          },
+        });
+      } else {
+        console.log(`➕ Creating quest: ${questData.questCode}`);
+        await prisma.questMst.create({
+          data: {
+            ...questData,
+            createdBy: questData.createdBy || defaultUserId,
+            updatedBy: questData.updatedBy || defaultUserId,
+          },
+        });
+      }
     }
     console.log('✅ クエストマスタの登録が完了しました');
   }

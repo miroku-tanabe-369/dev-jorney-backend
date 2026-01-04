@@ -18,6 +18,21 @@ COPY . .
 # 以下コマンドでtypeScriptのコードをjavaScriptに変換している。
 RUN npm run build
 
+# prisma/seed.tsを明示的にコンパイル（nest buildではsrcディレクトリのみがビルドされるため）
+# tsconfig.jsonの設定を使用してコンパイル
+RUN mkdir -p dist/prisma && \
+    npx tsc prisma/seed.ts \
+      --outDir dist/prisma \
+      --module nodenext \
+      --moduleResolution nodenext \
+      --esModuleInterop \
+      --resolvePackageJsonExports \
+      --skipLibCheck \
+      --target ES2023 \
+      --allowSyntheticDefaultImports \
+      --isolatedModules && \
+    echo "✅ prisma/seed.ts compiled successfully"
+
 
 # === Stage 2: Production Stage (実行環境) ===
 FROM node:20-alpine AS production
@@ -38,6 +53,8 @@ RUN npm ci --omit=dev && npm cache clean --force
 # 【重要】Prismaスキーマと生成されたClientをコピー
 # migrate deployを実行するためにschema.prismaが必要
 COPY --from=builder /app/prisma ./prisma
+# seed-data.jsonもコピー（シードスクリプトで使用）
+COPY --from=builder /app/prisma/seed-data.json ./prisma/seed-data.json
 # Prisma 7で生成されたクライアントコードとパッケージをコピー
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
