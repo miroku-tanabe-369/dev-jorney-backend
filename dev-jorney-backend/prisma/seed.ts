@@ -187,9 +187,12 @@ async function main() {
       
       if (existing) {
         console.log(`🔄 Updating node: ${nodeData.nodeCode}`);
+        // 更新前のデータをログに出力（デバッグ用）
+        console.log(`  Before: nodeName="${existing.nodeName}"`);
+        
         // createdByとcreatedAtは更新しない
         const { createdBy, createdAt, ...updateData } = nodeData;
-        await prisma.nodesMst.update({
+        const updated = await prisma.nodesMst.update({
           where: { nodeCode: nodeData.nodeCode },
           data: {
             ...updateData,
@@ -197,6 +200,9 @@ async function main() {
             // updatedAtは自動的に更新される
           },
         });
+        
+        // 更新後のデータをログに出力（デバッグ用）
+        console.log(`  After: nodeName="${updated.nodeName}"`);
       } else {
         console.log(`➕ Creating node: ${nodeData.nodeCode}`);
         await prisma.nodesMst.create({
@@ -215,32 +221,43 @@ async function main() {
   if (seedData.quests && seedData.quests.length > 0) {
     console.log(`📝 ${seedData.quests.length}件のクエストマスタを登録します...`);
     for (const questData of seedData.quests) {
-      // 既存データを確認
-      const existing = await prisma.questMst.findUnique({
-        where: { questCode: questData.questCode },
-      });
-      
-      if (existing) {
-        console.log(`🔄 Updating quest: ${questData.questCode}`);
-        // createdByとcreatedAtは更新しない
-        const { createdBy, createdAt, ...updateData } = questData;
-        await prisma.questMst.update({
+      try {
+        // 既存データを確認
+        const existing = await prisma.questMst.findUnique({
           where: { questCode: questData.questCode },
-          data: {
-            ...updateData,
-            updatedBy: questData.updatedBy || defaultUserId,
-            // updatedAtは自動的に更新される
-          },
         });
-      } else {
-        console.log(`➕ Creating quest: ${questData.questCode}`);
-        await prisma.questMst.create({
-          data: {
-            ...questData,
-            createdBy: questData.createdBy || defaultUserId,
-            updatedBy: questData.updatedBy || defaultUserId,
-          },
-        });
+        
+        if (existing) {
+          console.log(`🔄 Updating quest: ${questData.questCode}`);
+          // 更新前のデータをログに出力（デバッグ用）
+          console.log(`  Before: questName="${existing.questName}", questDetail="${existing.questDetail?.substring(0, 50)}..."`);
+          
+          // createdByとcreatedAtは更新しない
+          const { createdBy, createdAt, ...updateData } = questData;
+          const updated = await prisma.questMst.update({
+            where: { questCode: questData.questCode },
+            data: {
+              ...updateData,
+              updatedBy: questData.updatedBy || defaultUserId,
+              // updatedAtは自動的に更新される
+            },
+          });
+          
+          // 更新後のデータをログに出力（デバッグ用）
+          console.log(`  After: questName="${updated.questName}", questDetail="${updated.questDetail?.substring(0, 50)}..."`);
+        } else {
+          console.log(`➕ Creating quest: ${questData.questCode}`);
+          await prisma.questMst.create({
+            data: {
+              ...questData,
+              createdBy: questData.createdBy || defaultUserId,
+              updatedBy: questData.updatedBy || defaultUserId,
+            },
+          });
+        }
+      } catch (error) {
+        console.error(`❌ Error processing quest ${questData.questCode}:`, error);
+        throw error; // エラーを再スローして処理を中断
       }
     }
     console.log('✅ クエストマスタの登録が完了しました');
@@ -480,6 +497,116 @@ async function main() {
     console.log('✅ ノード依存関係の登録が完了しました');
   }
 
+
+  // シードデータに含まれていない進捗レコードを削除（中途半端なデータのクリーンアップ）
+  console.log('🧹 シードデータに含まれていない進捗レコードを削除します...');
+  
+  // クエスト進捗状況のクリーンアップ
+  if (seedData.questProgresses && seedData.questProgresses.length > 0) {
+    // シードデータに含まれる進捗レコードのキーセットを作成
+    const seedQuestProgressKeys = new Set(
+      seedData.questProgresses.map(p => `${p.userId}_${p.questCode}`)
+    );
+    
+    // シードデータに含まれていない進捗レコードを取得
+    const allQuestProgresses = await prisma.questProgressTran.findMany({
+      select: {
+        userId: true,
+        questCode: true,
+      },
+    });
+    
+    const questProgressesToDelete = allQuestProgresses.filter(
+      p => !seedQuestProgressKeys.has(`${p.userId}_${p.questCode}`)
+    );
+    
+    if (questProgressesToDelete.length > 0) {
+      console.log(`  📝 ${questProgressesToDelete.length}件のクエスト進捗レコードを削除します...`);
+      for (const progress of questProgressesToDelete) {
+        await prisma.questProgressTran.delete({
+          where: {
+            userId_questCode: {
+              userId: progress.userId,
+              questCode: progress.questCode,
+            },
+          },
+        });
+      }
+      console.log(`  ✅ クエスト進捗レコードの削除が完了しました`);
+    } else {
+      console.log(`  ℹ️  削除対象のクエスト進捗レコードはありません`);
+    }
+  }
+  
+  // ノード進捗状況のクリーンアップ
+  if (seedData.nodeProgresses && seedData.nodeProgresses.length > 0) {
+    const seedNodeProgressKeys = new Set(
+      seedData.nodeProgresses.map(p => `${p.userId}_${p.nodeCode}`)
+    );
+    
+    const allNodeProgresses = await prisma.nodeProgressTran.findMany({
+      select: {
+        userId: true,
+        nodeCode: true,
+      },
+    });
+    
+    const nodeProgressesToDelete = allNodeProgresses.filter(
+      p => !seedNodeProgressKeys.has(`${p.userId}_${p.nodeCode}`)
+    );
+    
+    if (nodeProgressesToDelete.length > 0) {
+      console.log(`  📝 ${nodeProgressesToDelete.length}件のノード進捗レコードを削除します...`);
+      for (const progress of nodeProgressesToDelete) {
+        await prisma.nodeProgressTran.delete({
+          where: {
+            userId_nodeCode: {
+              userId: progress.userId,
+              nodeCode: progress.nodeCode,
+            },
+          },
+        });
+      }
+      console.log(`  ✅ ノード進捗レコードの削除が完了しました`);
+    } else {
+      console.log(`  ℹ️  削除対象のノード進捗レコードはありません`);
+    }
+  }
+  
+  // スキルツリー進捗状況のクリーンアップ
+  if (seedData.skilltreeProgresses && seedData.skilltreeProgresses.length > 0) {
+    const seedSkilltreeProgressKeys = new Set(
+      seedData.skilltreeProgresses.map(p => `${p.userId}_${p.skilltreeCode}`)
+    );
+    
+    const allSkilltreeProgresses = await prisma.skilltreeProgressTran.findMany({
+      select: {
+        userId: true,
+        skilltreeCode: true,
+      },
+    });
+    
+    const skilltreeProgressesToDelete = allSkilltreeProgresses.filter(
+      p => !seedSkilltreeProgressKeys.has(`${p.userId}_${p.skilltreeCode}`)
+    );
+    
+    if (skilltreeProgressesToDelete.length > 0) {
+      console.log(`  📝 ${skilltreeProgressesToDelete.length}件のスキルツリー進捗レコードを削除します...`);
+      for (const progress of skilltreeProgressesToDelete) {
+        await prisma.skilltreeProgressTran.delete({
+          where: {
+            userId_skilltreeCode: {
+              userId: progress.userId,
+              skilltreeCode: progress.skilltreeCode,
+            },
+          },
+        });
+      }
+      console.log(`  ✅ スキルツリー進捗レコードの削除が完了しました`);
+    } else {
+      console.log(`  ℹ️  削除対象のスキルツリー進捗レコードはありません`);
+    }
+  }
 
   console.log('🎉 テストデータの登録が完了しました！');
 }

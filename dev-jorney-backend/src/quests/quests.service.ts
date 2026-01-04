@@ -28,6 +28,7 @@ export class QuestsService {
         learningObjectives: true,
         achievementConditions: true,
         checklistItems: true,
+        updatedAt: true, // デバッグ用：更新日時を取得
         questProgresses: {
           where: {
             userId: userId,
@@ -46,6 +47,9 @@ export class QuestsService {
     if (!quest) {
       throw new Error(`Quest with code ${questCode} not found`);
     }
+
+    // デバッグ用ログ（本番環境では削除推奨）
+    console.log(`[QuestService] getQuestDetail: questCode=${questCode}, questName="${quest.questName}", updatedAt=${quest.updatedAt}`);
 
     return {
       questCode: quest.questCode,
