@@ -229,21 +229,25 @@ export class UsersService {
    * users_mstテーブルから更新
    * 
    * @param userId: Cognitoのsub（ユーザーID）
-   * @param updateProfileRequestDto: プロフィール情報更新リクエストDTO
+   * @param updateProfileDto: プロフィール情報更新リクエストDTO
    * @throws NotFoundException
    */
   async updateProfile(
     userId: string,
-    req: updateProfileRequestDto,
+    updateProfileDto: updateProfileRequestDto,
   ){
+    // 空文字列をnullに変換（データベースの整合性のため）
+    const profileValue = updateProfileDto.profile === '' ? null : updateProfileDto.profile;
+    const iconValue = updateProfileDto.icon === '' ? null : updateProfileDto.icon;
+
     // プロフィール情報を更新
     await this.prisma.usersMst.update({
       where: { userId },
       data: {
-        name: req.name,
-        email: req.email,
-        profile: req.profile,
-        icon: req.icon,
+        name: updateProfileDto.name,
+        email: updateProfileDto.email,
+        profile: profileValue,
+        icon: iconValue,
         updatedBy: userId, // 更新者を設定
       },
     });
