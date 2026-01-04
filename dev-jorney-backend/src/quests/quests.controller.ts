@@ -32,11 +32,31 @@ export class QuestsController {
   }
 
   /**
-   * クエスト進捗情報を更新する
+   * クエストを進行中に変更する
    * 
    * 認証: 必須（JWTトークンからユーザーIDを取得）
    */
-  @Put('update-quest-progress/:questCode')
+  @Put('start-quest/:questCode')
+  async startQuest(
+    @Param('questCode') questCode: string,
+    @Request() req,
+  ) {
+    // JWT Guardが検証済みのユーザー情報からユーザーIDを取得
+    const userId = req.user.sub;
+    
+    if (!questCode) {
+      throw new Error('questCode is required');
+    }
+
+    return this.questsService.startQuest(questCode, userId);
+  }
+
+  /**
+   * クエスト進捗情報を更新する（完了処理）
+   * 
+   * 認証: 必須（JWTトークンからユーザーIDを取得）
+   */
+  @Put('complete-quest/:questCode')
   async updateQuestProgress(
     @Param('questCode') questCode: string,
     @Request() req,

@@ -61,7 +61,58 @@ export class QuestsService {
   }
 
   /**
-   * クエスト詳細情報を更新する
+   * クエストを進行中に変更する
+   * @param questCode 
+   * @param userid 
+   * @returns 
+   * @throws Error
+   */
+  async startQuest(questCode: string, userid: string) {
+    // クエストマスタの存在確認
+    const questMaster = await this.prisma.questMst.findUnique({
+      where: { questCode },
+      select: {
+        questCode: true,
+        nodeCode: true,
+      },
+    });
+
+    if (!questMaster) {
+      throw new Error(`Quest with code ${questCode} not found`);
+    }
+
+    // クエストの進捗情報を更新（存在しない場合は作成）
+    await this.prisma.questProgressTran.upsert({
+      where: {
+        userId_questCode: {
+          userId: userid,
+          questCode: questCode,
+        },
+      },
+      update: {
+        progress: 0,
+        statusCode: 'IN_PROGRESS',
+        updatedBy: userid,
+      },
+      create: {
+        userId: userid,
+        questCode: questCode,
+        progress: 0,
+        statusCode: 'IN_PROGRESS',
+        createdBy: userid,
+        updatedBy: userid,
+      },
+    });
+
+    return {
+      success: true,
+      questCode,
+      statusCode: 'IN_PROGRESS',
+    };
+  }
+
+  /**
+   * クエスト詳細情報を更新する（完了処理）
    * @param questCode 
    * @param userid 
    * @returns 
