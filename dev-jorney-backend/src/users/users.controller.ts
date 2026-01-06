@@ -19,15 +19,11 @@ export class UsersController {
   async getDashboard(@Request() req): Promise<UserDashboardResponseDto> {
     // JWT Guardが検証済みのユーザー情報からユーザーID、名前、メールアドレスを取得
     const userId = req.user.sub;
-    const name = req.user.name;
-    const email = req.user.email;
+    const name = req.user.name || '';
+    const email = req.user.email || '';
     
     if (!userId) {
       throw new Error('User ID not found in JWT token');
-    }
-    
-    if (!name || !email) {
-      throw new Error('User name or email not found in JWT token');
     }
     
     return this.usersService.getUserDashboard(userId, name, email);

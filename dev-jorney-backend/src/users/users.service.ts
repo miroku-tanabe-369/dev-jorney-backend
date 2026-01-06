@@ -13,8 +13,8 @@ export class UsersService {
    * 新規ユーザーの場合は自動的にユーザーを作成し、スキルツリー進捗を初期化する
    * 
    *  @param userId: Cognitoのsub（ユーザーID）
-   *  @param name: ユーザー名（JWTトークンから取得）
-   *  @param email: メールアドレス（JWTトークンから取得）
+   *  @param name: ユーザー名（JWTトークンから取得、オプショナル）
+   *  @param email: メールアドレス（JWTトークンから取得、オプショナル）
    *  @returns UserDashboardResponseDto
    *  @throws NotFoundException
    */
@@ -32,6 +32,11 @@ export class UsersService {
 
     // ユーザーが存在しない場合は新規作成
     if (!userInfo) {
+      // 新規ユーザー作成時はnameとemailが必須
+      if (!name || !email) {
+        throw new NotFoundException(`User with ID ${userId} not found. Name and email are required for new user creation.`);
+      }
+
       // 新規ユーザーを作成
       await this.prisma.usersMst.create({
         data: {
