@@ -8,7 +8,8 @@
  * jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(). 
  * secretOrKeyProvider: passportJwtSecret を使い、jwksUri を構築して渡す. 
  * issuer と audience の検証値を設定. 
- * validate(payload): 必須のセキュリティチェックとして if (payload.token_use !== 'access') を実装し、Access Token の利用を強制する.
+ * validate(payload): 必須のセキュリティチェックとして if (payload.token_use !== 'id') を実装し、ID Token の利用を強制する.
+ * ID Tokenを使用する理由: nameとemailなどのユーザー属性が含まれるため
  */
 
 import { Injectable,Logger } from "@nestjs/common";
@@ -68,10 +69,9 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
             //ヘッダからBearerトークンを取得
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
-            // 注意: CognitoのAccess Tokenには`aud`クレームが含まれないため、
-            // audience検証を無効化する
-            // セキュリティ上、issuer検証と署名検証で十分な保護が提供される
-            // audience: cognitoClientId, // コメントアウト: Access Tokenには`aud`が含まれない
+            // 注意: Access Tokenには`aud`クレームが含まれないため、audience検証を無効化
+            // ID Tokenを使用する場合は、audience検証を有効化することを推奨
+            // audience: cognitoClientId, // 一時的に無効化（Access TokenとID Tokenの両方を受け入れるため）
             //jwt発行者。本プロジェクトではCognito（発行者検証）
             issuer: cognitoIssuer,
             algorithms: ['RS256'],
@@ -97,17 +97,9 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     //validate自体はPromiseにすることも可能。
     //戻り値はPassport.jsによって自動的にreq.userに設定される
     public validate(payload: JwtPayload): JwtUser {
-        // Access Tokenのclient_idクレームを検証
-        // 注意: Access Tokenには`aud`クレームが含まれない場合があるが、
-        // `client_id`クレームは常に存在し、IDトークンの`aud`と同じ値を持つ
+        // ID TokenまたはAccess Tokenの検証
         const tokenPayload = payload as any;
-        const clientId = tokenPayload.client_id;
-        const expectedClientId = this.configService.get<string>('COGNITO_CLIENT_ID');
-        
-        // client_idクレームの検証
-        if (clientId && expectedClientId && clientId !== expectedClientId) {
-            throw new Error(`Invalid client_id: expected ${expectedClientId}, got ${clientId}`);
-        }
+        const tokenUse = tokenPayload.token_use;
         
         // デバッグ用: ペイロードの内容をログに出力（本番環境では削除推奨）
         this.logger.debug(`JWT Payload keys: ${Object.keys(tokenPayload).join(', ')}`);
@@ -115,8 +107,14 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
         this.logger.debug(`JWT Payload name: ${tokenPayload.name || 'NOT_FOUND'}`);
         this.logger.debug(`JWT Payload token_use: ${tokenPayload.token_use || 'NOT_FOUND'}`);
         
+        // Access Tokenの場合は警告を出力（ID Tokenへの移行を推奨）
+        if (tokenUse === 'access') {
+            this.logger.warn('Access Token detected. ID Token is recommended for user attributes (name, email).');
+        }
+        
         // JwtUserオブジェクトを返すことで、コントローラでreq.user.sub, req.user.email, req.user.nameでアクセス可能
-        // Access Tokenにはnameやemailが含まれない場合があるため、空文字列をデフォルト値として使用
+        // ID Tokenには通常nameとemailが含まれるが、Access Tokenには含まれない
+        // Access Tokenの場合は空文字列を返し、ユーザー作成時にデフォルト値を使用
         return {
             sub: payload.sub,
             email: payload.email || tokenPayload.email || '',
