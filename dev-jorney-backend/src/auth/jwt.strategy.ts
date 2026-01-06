@@ -109,11 +109,18 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
             throw new Error(`Invalid client_id: expected ${expectedClientId}, got ${clientId}`);
         }
         
+        // デバッグ用: ペイロードの内容をログに出力（本番環境では削除推奨）
+        this.logger.debug(`JWT Payload keys: ${Object.keys(tokenPayload).join(', ')}`);
+        this.logger.debug(`JWT Payload email: ${tokenPayload.email || 'NOT_FOUND'}`);
+        this.logger.debug(`JWT Payload name: ${tokenPayload.name || 'NOT_FOUND'}`);
+        this.logger.debug(`JWT Payload token_use: ${tokenPayload.token_use || 'NOT_FOUND'}`);
+        
         // JwtUserオブジェクトを返すことで、コントローラでreq.user.sub, req.user.email, req.user.nameでアクセス可能
+        // Access Tokenにはnameやemailが含まれない場合があるため、空文字列をデフォルト値として使用
         return {
             sub: payload.sub,
-            email: payload.email || '',
-            name: payload.name || '',
+            email: payload.email || tokenPayload.email || '',
+            name: payload.name || tokenPayload.name || '',
         };
     }
 }

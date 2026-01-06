@@ -33,16 +33,16 @@ export class UsersService {
     // ユーザーが存在しない場合は新規作成
     if (!userInfo) {
       // 新規ユーザー作成時はnameとemailが必須
-      if (!name || !email) {
-        throw new NotFoundException(`User with ID ${userId} not found. Name and email are required for new user creation.`);
-      }
+      // Access Tokenにはnameやemailが含まれない場合があるため、デフォルト値を設定
+      const userName = name || `User_${userId.substring(0, 8)}`; // デフォルト名を生成
+      const userEmail = email || `${userId}@cognito.local`; // デフォルトメールアドレスを生成
 
       // 新規ユーザーを作成
       await this.prisma.usersMst.create({
         data: {
           userId: userId,
-          name: name,
-          email: email,
+          name: userName,
+          email: userEmail,
           currentLevel: 1,
           totalExp: 0,
           totalSkillPoint: 0,
