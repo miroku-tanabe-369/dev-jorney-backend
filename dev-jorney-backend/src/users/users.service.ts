@@ -10,13 +10,16 @@ export class UsersService {
 
   /**
    * ダッシュボード用の概要情報を取得
+   * 新規ユーザーの場合は自動的にユーザーを作成し、スキルツリー進捗を初期化する
    * 
    *  @param userId: Cognitoのsub（ユーザーID）
+   *  @param name: ユーザー名（JWTトークンから取得）
+   *  @param email: メールアドレス（JWTトークンから取得）
    *  @returns UserDashboardResponseDto
    *  @throws NotFoundException
    */
-  async getUserDashboard(userId: string): Promise<UserDashboardResponseDto> {
-    const userInfo = await this.prisma.usersMst.findUnique({
+  async getUserDashboard(userId: string, name: string, email: string): Promise<UserDashboardResponseDto> {
+    let userInfo = await this.prisma.usersMst.findUnique({
       where: { userId },
       select: {
         name: true,
@@ -27,8 +30,59 @@ export class UsersService {
       },
     });
 
+    // ユーザーが存在しない場合は新規作成
     if (!userInfo) {
-      throw new NotFoundException(`User with ID ${userId} not found`);
+      // 新規ユーザーを作成
+      await this.prisma.usersMst.create({
+        data: {
+          userId: userId,
+          name: name,
+          email: email,
+          currentLevel: 1,
+          totalExp: 0,
+          totalSkillPoint: 0,
+          completedQuestCount: 0,
+          createdBy: userId,
+          updatedBy: userId,
+        },
+      });
+
+      // すべてのスキルツリーマスタを取得
+      const skilltrees = await this.prisma.skilltreesMst.findMany({
+        select: {
+          skilltreeCode: true,
+        },
+      });
+
+      // すべてのスキルツリーに対して進捗を初期化（progress: 0, statusCode: 'NOT_STARTED'）
+      if (skilltrees.length > 0) {
+        await this.prisma.skilltreeProgressTran.createMany({
+          data: skilltrees.map((skilltree) => ({
+            userId: userId,
+            skilltreeCode: skilltree.skilltreeCode,
+            progress: 0,
+            statusCode: 'NOT_STARTED',
+            createdBy: userId,
+            updatedBy: userId,
+          })),
+        });
+      }
+
+      // 作成したユーザー情報を再取得
+      userInfo = await this.prisma.usersMst.findUnique({
+        where: { userId },
+        select: {
+          name: true,
+          currentLevel: true,
+          totalExp: true,
+          totalSkillPoint: true,
+          completedQuestCount: true,
+        },
+      });
+
+      if (!userInfo) {
+        throw new NotFoundException(`Failed to create user with ID ${userId}`);
+      }
     }
 
     // 1からcurrentLevel + 1までのレベル情報を取得
